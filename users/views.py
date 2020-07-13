@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import UserRegistrationForm, LoginForm
+from .forms import UserRegistrationForm, LoginForm, UserUpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
@@ -35,3 +35,18 @@ def login(request):
         form = LoginForm()
     return render(request, 'users/login.html', context={'form': form})
 
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your account has been updated!')
+            print(f'user updated successfully.')
+            return redirect('index-home')
+    else:
+        form = UserUpdateForm(instance=request.user)
+    return render(request, 'users/profile.html', context={
+        'form': form,
+
+    })
