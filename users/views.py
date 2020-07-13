@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, LoginForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
 
 # Create your views here.
 def register(request):
@@ -24,11 +26,12 @@ def login(request):
             password = request.POST['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
-                login(request, user)
+                auth_login(request, user)
                 return redirect('index-home')
         else:
             messages.warning(request, 'Invalid email address or password. Please try again.')
             form = LoginForm()
     else:
         form = LoginForm()
-    return render(request, 'web/home.html', context={'form': form})
+    return render(request, 'users/login.html', context={'form': form})
+
