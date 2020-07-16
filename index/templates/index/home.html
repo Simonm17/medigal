@@ -2,11 +2,10 @@
 
 {% block body %}
 
-<div>
-    {{ datetime }}
-</div>
 
-<div>
+<div class="jumbotron">
+    {{ datetime }}
+
     {% if user.is_authenticated %}
         {% if user.first_name %}
             <h5>Hello, {{ user.first_name }}!</h5>
@@ -27,5 +26,19 @@
     {% endif %}
 </div>
 
+<div>
+    <ul>
+        <li><a href="#">Schedule a new appointment</a></li>
+        <li><a href="#">View scheduled appointments</a></li>
+    </ul>
+</div>
+
+<div>
+    <p>Important Deadlines:</p>
+    <ul>
+        <li>[Applicant's name ]</li>
+        <li>[QME date] - [days left]</li>
+    </ul>
+</div>
 
 {% endblock body %}

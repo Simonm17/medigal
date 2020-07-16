@@ -5,9 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 
-# Create your views here.
-def register(request):
 
+def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
@@ -22,6 +21,7 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
         if form.is_valid():
+            # Note: POST['username'] = email
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(request, username=username, password=password)
@@ -33,7 +33,7 @@ def login(request):
             form = LoginForm()
     else:
         form = LoginForm()
-    return render(request, 'users/login.html', context={'form': form})
+    return render(request, 'users/login.html', context={'form': form, 'title': 'Login'})
 
 @login_required
 def profile(request):
@@ -46,7 +46,4 @@ def profile(request):
             return redirect('index-home')
     else:
         form = UserUpdateForm(instance=request.user)
-    return render(request, 'users/profile.html', context={
-        'form': form,
-
-    })
+    return render(request, 'users/profile.html', context={'form': form, 'title': 'Profile'})

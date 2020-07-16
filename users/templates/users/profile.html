@@ -10,6 +10,8 @@
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
+    <p>Date joined: {{ user.date_joined }}</p>
+    <p>Last login: {{ user.last_login }}</p>
     <button type="submit">Update Profile</button>
 </form>
 
