@@ -42,6 +42,8 @@ INSTALLED_APPS = [
 
     'index.apps.IndexConfig',
     'users.apps.UsersConfig',
+    'contacts.apps.ContactsConfig',
+    
 ]
 
 AUTH_USER_MODEL = 'users.User'

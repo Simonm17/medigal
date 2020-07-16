@@ -1,0 +1,67 @@
+from django.db import models
+
+
+class Address(models.Model):
+    address = models.CharField(max_length=250)
+    number= models.CharField(max_length=15, verbose_name='suite number')
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=2)
+    zipcode = models.IntegerField(verbose_name='Postal Code')
+
+    def __str__(self):
+        return f'{self.address[0:8]}.. {self.city[0:5]}, {self.state} {self.zipcode}'
+
+
+class Telephone(models.Model):
+    TYPE = [
+        ('H', 'Home'),
+        ('W', 'Work'),
+        ('S', 'School'),
+        ('Mo', 'Mobile'),
+        ('Ma', 'Main'),
+        ('HF', 'Home Fax'),
+        ('WF', 'Work Fax'),
+        ('P', 'Pager'),
+        ('O', 'Other'),
+    ]
+    number = models.IntegerField()
+    type = models.CharField(max_length=2, choices=TYPE, default='Ma')
+
+    def __str__(self):
+        num = str(self.number)
+        if len(num) == 10:
+            return f'{num[:3]}-{num[3:6]}-{num[6:]}'
+        elif len(num) == 11:
+            return f'({num[0]}) {num[1:4]}-{num[4:7]}-{num[7:]}'
+        else:
+            return num
+
+
+class Email(models.Model):
+    email = models.EmailField(max_length=250)
+    def __str__(self):
+        return self.email
+
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=50, default=None)
+    last_name = models.CharField(max_length=50, default=None)
+    birth_date = models.DateField(blank=True, null=True)
+    ssn = models.IntegerField(verbose_name="Social Security Number", unique=True, default=None, blank=True, null=True)
+    address = models.ManyToManyField(Address, blank=True)
+    telephone = models.ManyToManyField(Telephone, blank=True)
+    email = models.ManyToManyField(Email, blank=True)
+    notes = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.last_name}, {self.first_name}'
+
+    class Meta:
+        abstract = True
+
+class Applicant(Person):
+    pass
+
+class Doctor(Person):
+    company = models.ForeignKey('Employer2', on_delete=models.PROTECT, default=None, blank=True, null=True)
+
