@@ -63,5 +63,5 @@ class Applicant(Person):
     pass
 
 class Doctor(Person):
-    company = models.ForeignKey('Employer2', on_delete=models.PROTECT, default=None, blank=True, null=True)
+    pass
 
