@@ -1,0 +1,15 @@
+{% extends 'index/base.html' %}
+
+{% block body %}
+<form method='POST'>
+    {% csrf_token %}
+    {{ d_form.as_p }}
+    {{ a_form.as_p }}
+    {{ t_form.as_p }}
+    {{ e_form.as_p }}
+    <button type="submit">Create New Doctor</button>
+</form>
+
+<a href="{% url 'index-home' %}">Go home</a>
+
+{% endblock body %}

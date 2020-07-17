@@ -1,5 +1,5 @@
 from django.db import models
-
+from users.models import User
 
 class Address(models.Model):
     address = models.CharField(max_length=250)
@@ -63,5 +63,9 @@ class Applicant(Person):
     pass
 
 class Doctor(Person):
-    pass
+    created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="created_by")
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="updated_by")
+    updated_on = models.DateTimeField(auto_now=True)
+
 
