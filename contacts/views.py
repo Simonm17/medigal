@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from users.models import User
 from .forms import DoctorCreationForm, AddressForm, TelephoneForm, EmailForm
+from .models import Doctor, Address, Telephone, Email
 from django.contrib import messages
 
 def add_doctor(request):
@@ -17,6 +18,14 @@ def add_doctor(request):
             check_d_form.created_by = request.user
             check_d_form.updated_by = request.user
             check_d_form.save()
+            last_a = Address.objects.last()
+            last_t = Telephone.objects.last()
+            last_e = Email.objects.last()
+            doctor = Doctor.objects.last()
+            doctor.address.add(last_a)
+            doctor.telephone.add(last_t)
+            doctor.email.add(last_e)
+            doctor.save()
             messages.success(request, f'Your contact form has been saved.')
             return redirect('index-home')
     else:
