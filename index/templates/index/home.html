@@ -30,6 +30,9 @@
     {% else %}
         <a href="{% url 'logout' %}">Logout</a>
         <a href="{% url 'profile' %}">Profile</a>
+        {% if user.is_admin %}
+            <a href="http://localhost:8000/admin/">Admin</a>
+        {% endif %}
     {% endif %}
 </div>
 
