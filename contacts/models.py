@@ -2,8 +2,13 @@ from django.db import models
 from users.models import User
 
 class Address(models.Model):
+    TYPE = [
+        ('PHYSICAL', 'Physical'),
+        ('MAILING', 'Mailing'),
+    ]
+    type = models.CharField(max_length=8, choices=TYPE, default='PHYSICAL')
     address = models.CharField(max_length=250)
-    number= models.CharField(max_length=15, verbose_name='suite number')
+    suite_number = models.CharField(max_length=15, verbose_name='suite number', blank=True)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=2)
     zipcode = models.IntegerField(verbose_name='Postal Code')
@@ -44,14 +49,15 @@ class Email(models.Model):
 
 
 class Person(models.Model):
-    first_name = models.CharField(max_length=50, default=None)
-    last_name = models.CharField(max_length=50, default=None)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
     birth_date = models.DateField(blank=True, null=True)
-    ssn = models.IntegerField(verbose_name="Social Security Number", unique=True, default=None, blank=True, null=True)
+    ssn = models.IntegerField(verbose_name="Social Security Number", unique=True, blank=True, null=True)
+    # Null has no effect on ManyToManyField
     address = models.ManyToManyField(Address, blank=True)
     telephone = models.ManyToManyField(Telephone, blank=True)
     email = models.ManyToManyField(Email, blank=True)
-    notes = models.TextField(blank=True, null=True)
+    notes = models.TextField(blank=True)
 
     def __str__(self):
         return f'{self.last_name}, {self.first_name}'
@@ -64,8 +70,8 @@ class Applicant(Person):
 
 class Doctor(Person):
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="created_by")
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True)
     updated_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="updated_by")
-    updated_on = models.DateTimeField(auto_now=True)
+    updated_date = models.DateTimeField(auto_now=True, null=True)
 
 

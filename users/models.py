@@ -30,11 +30,11 @@ class Manager(BaseUserManager):
 class User(AbstractBaseUser):
     email = models.EmailField(
         verbose_name='Email Address', max_length=120, unique=True)
-    first_name = models.CharField(max_length=50, null=True, blank=True)
-    last_name = models.CharField(max_length=50, null=True, blank=True)
+    first_name = models.CharField(max_length=50, blank=True)
+    last_name = models.CharField(max_length=50, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
-    date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True, null=True, blank=True)
-    last_login = models.DateTimeField(verbose_name='last login', auto_now=True, null=True, blank=True)
+    date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
+    last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
@@ -58,6 +58,6 @@ class User(AbstractBaseUser):
         return True
 
 """
-Need to make sure settings.py has this custom user configured to be used in place of default user model by inputting in settings: AUTH_USER_MODEL = '<app_name>.User'.
+IMPORTANT: Need to make sure settings.py has this custom user configured to be used in place of default user model by inputting in settings: AUTH_USER_MODEL = '<app_name>.User'.
 Also make sure to set up admin and register app to settings.
 """
