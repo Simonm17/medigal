@@ -8,9 +8,14 @@ def add_doctor(request):
         a_form = AddressForm(request.POST)
         t_form = TelephoneForm(request.POST)
         e_form = EmailForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'Your form has been saved.')
+        if d_form.is_valid() and a_form.is_valid() and t_form.is_valid() and e_form.is_valid():
+            a_form.save()
+            t_form.save()
+            e_form.save()
+            check_d_form = d_form.save(commit=False)
+            check_d_form.created_by = request.user
+            check_d_form.save()
+            messages.success(request, f'Your contact form has been saved.')
     else:
         d_form = DoctorCreationForm()
         a_form = AddressForm()

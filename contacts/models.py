@@ -2,11 +2,11 @@ from django.db import models
 from users.models import User
 
 class Address(models.Model):
-    TYPE = [
+    ADDRESS_TYPE = [
         ('PHYSICAL', 'Physical'),
         ('MAILING', 'Mailing'),
     ]
-    type = models.CharField(max_length=8, choices=TYPE, default='PHYSICAL')
+    address_type = models.CharField(max_length=8, choices=ADDRESS_TYPE, default='PHYSICAL')
     address = models.CharField(max_length=250)
     suite_number = models.CharField(max_length=15, verbose_name='suite number', blank=True)
     city = models.CharField(max_length=50)

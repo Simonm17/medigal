@@ -2,9 +2,10 @@ from django.forms import ModelForm
 from django import forms
 from .models import Doctor, Address, Telephone, Email
 
-class DoctorCreationForm(forms.Form):
-    first_name = forms.CharField(label="First Name", max_length=120)
-    last_name = forms.CharField(label="Last Name", max_length=120)
+class DoctorCreationForm(ModelForm):
+    class Meta:
+        model = Doctor
+        fields = ['first_name', 'last_name']
     
 class AddressForm(ModelForm):
     class Meta:
