@@ -48,3 +48,6 @@ class DoctorListView(ListView):
     template_name = 'contacts/doctor_list.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'doctors'
     ordering = ['first_name']
+
+class DoctorDetailView(DetailView):
+     model = Doctor
