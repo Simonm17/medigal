@@ -1,0 +1,29 @@
+{% extends 'index/base.html' %}
+
+{% block body %}
+
+{% for doctor in doctors %}
+    <div>
+        <h5>{{ doctor.last_name}}, {{ doctor.first_name }}</h5>
+        <div>
+            <h5>Address</h5>
+            {% for a in doctor.address.all %}
+                <p>{{ a }}</p>
+            {% endfor %}
+        </div>
+        <div>
+            <h5>Telephone</h5>
+            {% for t in doctor.telephone.all %}
+                <p>{{ t }}</p>
+            {% endfor %}
+        </div>
+        <div>
+            <h5>Email</h5>
+            {% for e in doctor.email.all %}
+                <p>{{ e }}</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock body %}

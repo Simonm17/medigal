@@ -3,6 +3,7 @@ from users.models import User
 from .forms import DoctorCreationForm, AddressForm, TelephoneForm, EmailForm
 from .models import Doctor, Address, Telephone, Email
 from django.contrib import messages
+from django.views.generic import ListView, DetailView
 
 def add_doctor(request):
     if request.method == 'POST':
@@ -40,3 +41,10 @@ def add_doctor(request):
         'e_form': e_form,
         'title': 'New QME/AME Doctor',
     })
+
+
+class DoctorListView(ListView):
+    model = Doctor
+    template_name = 'contacts/doctor_list.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'doctors'
+    ordering = ['first_name']
