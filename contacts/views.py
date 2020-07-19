@@ -3,7 +3,9 @@ from users.models import User
 from .forms import DoctorCreationForm, AddressForm, TelephoneForm, EmailForm
 from .models import Doctor, Address, Telephone, Email
 from django.contrib import messages
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
 
 def add_doctor(request):
     if request.method == 'POST':
