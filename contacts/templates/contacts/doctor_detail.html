@@ -7,7 +7,12 @@
     <div>
         <h5>Address</h5>
         {% for a in doctor.address.all %}
-            <p>{{ a }}</p>
+            <p>{{ a.address_type }}:</p>
+            <p>{{ a.address }}</p>
+            <p>{{ a.suite_number }}</p>
+            <p>{{ a.city }}</p>
+            <p>{{ a.state }}</p>
+            <p>{{ a.zipcode }}</p>
         {% endfor %}
     </div>
     <div>

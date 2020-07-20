@@ -14,7 +14,7 @@ class Address(models.Model):
     zipcode = models.IntegerField(verbose_name='Postal Code')
 
     def __str__(self):
-        return f'{self.address[0:8]}.. {self.city[0:5]}, {self.state} {self.zipcode}'
+        return f'{self.address}, {self.city[0:5]}, {self.state} {self.zipcode}'
 
 
 class Telephone(models.Model):

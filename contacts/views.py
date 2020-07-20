@@ -52,4 +52,5 @@ class DoctorListView(ListView):
     ordering = ['first_name']
 
 class DoctorDetailView(DetailView):
-     model = Doctor
+    """ for template context, use 'doctor' or 'object' """
+    model = Doctor
