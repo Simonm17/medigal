@@ -3,7 +3,7 @@
 {% block body %}
 
 <div>
-    <h5>{{ doctor.last_name}}, {{ doctor.first_name }}</h5>
+    <a href="{% url 'doctor_update' object.id %}"><h5>{{ doctor.last_name}}, {{ doctor.first_name }}</h5></a>
     <div>
         <h5>Address</h5>
         {% for a in doctor.address.all %}
@@ -27,6 +27,7 @@
             <p>{{ e }}</p>
         {% endfor %}
     </div>
+
 </div>
 
 {% endblock body %}

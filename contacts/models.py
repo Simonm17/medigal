@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User
-
+from django.urls import reverse
 class Address(models.Model):
     ADDRESS_TYPE = [
         ('PHYSICAL', 'Physical'),
@@ -15,6 +15,7 @@ class Address(models.Model):
 
     def __str__(self):
         return f'{self.address}, {self.city[0:5]}, {self.state} {self.zipcode}'
+    
 
 
 class Telephone(models.Model):
@@ -74,4 +75,6 @@ class Doctor(Person):
     updated_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="updated_by")
     updated_date = models.DateTimeField(auto_now=True, null=True)
 
-
+    # For UpdateView to reverse back to after form POST request
+    def get_absolute_url(self):
+        return reverse('doctor_detail', kwargs={'pk': self.pk})

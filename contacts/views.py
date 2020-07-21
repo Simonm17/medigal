@@ -54,3 +54,8 @@ class DoctorListView(ListView):
 class DoctorDetailView(DetailView):
     """ for template context, use 'doctor' or 'object' """
     model = Doctor
+
+class DoctorUpdateView(UpdateView):
+    model = Doctor
+    fields = ['first_name', 'last_name']
+    template_name = 'contacts/doctor_update.html'
