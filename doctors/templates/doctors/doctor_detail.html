@@ -3,9 +3,10 @@
 {% block body %}
 
 <div>
-    <a href="{% url 'doctor_update' object.id %}"><h5>{{ doctor.last_name}}, {{ doctor.first_name }}</h5></a>
+    <a href="{% url 'doctor_update' object.id %}"><h5>{{ doctor.prefix }} {{ doctor.last_name}}, {{ doctor.first_name }} {{ doctor.suffix }}</h5></a>
     <div>
         <h5>Address</h5>
+        </a>
         {% for a in doctor.address.all %}
             <p>{{ a.address_type }}:</p>
             <p>{{ a.address }}</p>

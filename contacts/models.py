@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User
-from django.urls import reverse
+
 class Address(models.Model):
     ADDRESS_TYPE = [
         ('PHYSICAL', 'Physical'),
@@ -50,8 +50,36 @@ class Email(models.Model):
 
 
 class Person(models.Model):
+
+    PREFIX = [
+        ('mr', 'Mr.'),
+        ('mrs', 'Mrs.'),
+        ('ms', 'Ms.'),
+        ('miss', 'Miss'),
+        ('dr', 'Dr.'),
+        ('hon', 'Hon.'),
+    ]
+
+    SUFFIX = [
+        ('jr', 'Jr.'),
+        ('sr', 'Sr.'),
+        ('esq', 'Esq.'),
+        ('jd', 'J.D.'),
+        ('md', 'M.D.'),
+        ('phd', 'Ph.D.'),
+        ('psyd', 'Psy.D.'),
+        ('dds', 'D.D.S.'),
+        ('dpm', 'D.P.M.'),
+        ('do', 'D.O.'),
+        ('dmd', 'D.M.D.'),
+        ('np', 'N.P.'),
+        ('od', 'O.D.'),
+        ('pa', 'P.A.'),
+    ]
+    prefix = models.CharField(max_length=10, choices=PREFIX, blank=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    suffix = models.CharField(max_length=10, choices=SUFFIX, blank=True)
     birth_date = models.DateField(blank=True, null=True)
     ssn = models.IntegerField(verbose_name="Social Security Number", unique=True, blank=True, null=True)
     # Null has no effect on ManyToManyField
@@ -69,12 +97,4 @@ class Person(models.Model):
 class Applicant(Person):
     pass
 
-class Doctor(Person):
-    created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="created_by")
-    created_date = models.DateTimeField(auto_now_add=True)
-    updated_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="updated_by")
-    updated_date = models.DateTimeField(auto_now=True, null=True)
 
-    # For UpdateView to reverse back to after form POST request
-    def get_absolute_url(self):
-        return reverse('doctor_detail', kwargs={'pk': self.pk})

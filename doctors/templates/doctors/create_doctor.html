@@ -9,7 +9,7 @@
     {{ e_form.as_p }}
     <button type="submit">Create New Doctor</button>
 </form>
-
+<a href="{% url 'doctor_list' %}">Go back</a>
 <a href="{% url 'index-home' %}">Go home</a>
 
 {% endblock body %}

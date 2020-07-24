@@ -1,9 +1,0 @@
-{% extends 'index/base.html' %}
-
-{% block body %}
-
-{% for doctor in doctors %}
-    <a href="{% url 'doctor-detail' doctor.id %}">{{ doctor.last_name }}, {{ doctor.first_name}}</a>
-{% endfor %}
-
-{% endblock body %}

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'index.apps.IndexConfig',
     'users.apps.UsersConfig',
     'contacts.apps.ContactsConfig',
+    'doctors.apps.DoctorsConfig',
     
 ]
 
@@ -127,6 +128,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_REDIRECT_URL = 'index-home'
+LOGIN_URL = 'login'
 
 
 # For password reset email configs
