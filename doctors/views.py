@@ -6,7 +6,7 @@ from contacts.forms import AddressForm, TelephoneForm, EmailForm
 from django.views.generic import ListView, DetailView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
@@ -64,7 +64,9 @@ class DoctorDetailView(DetailView):
         context['address'] = Address.objects.all()
         return context
 
-class DoctorUpdateView(LoginRequiredMixin, UpdateView):
+class DoctorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Doctor
     fields = ['first_name', 'last_name']
     template_name = 'doctors/doctor_update.html'
+    success_message = 'Contact detail has been updated successfully!'
+

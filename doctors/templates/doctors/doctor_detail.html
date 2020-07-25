@@ -9,6 +9,7 @@
         </a>
         {% for a in doctor.address.all %}
             <p>{{ a.address_type }}:</p>
+            <a href="{% url 'address_update' a.id %}?next={% url 'doctor_detail' object.id %}">Update Address</a>
             <p>{{ a.address }}</p>
             <p>{{ a.suite_number }}</p>
             <p>{{ a.city }}</p>

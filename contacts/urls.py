@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import AddressUpdateView
+from .views import AddressDetailView, AddressUpdateView
 
 urlpatterns = [
-    path('address-detail/<int:pk>/update/', AddressUpdateView.as_view(), name='address_update'),
+    path('<int:pk>/', AddressDetailView.as_view(), name='address_detail'),
+    path('<int:pk>/update/', AddressUpdateView.as_view(), name='address_update'),
 ]
