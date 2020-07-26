@@ -1,0 +1,11 @@
+{% extends 'index/base.html' %}
+
+{% block body %}
+
+{% for applicant in applicants %}
+    <a href="{% url 'applicant_detail' applicant.id %}">{{ applicant.last_name }}, {{ applicant.first_name}}</a>
+{% endfor %}
+
+<a href="{% url 'add_applicant' %}">Add new Applicant</a>
+
+{% endblock body %}

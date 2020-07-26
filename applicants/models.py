@@ -3,14 +3,15 @@ from users.models import User
 from django.urls import reverse
 from contacts.models import Person
 
-class Doctor(Person):
+# Create your models here.
+class Applicant(Person):
     """
-    created/updated fields are on child model instead of parent Person model due to conflicting reverse query name for other child models e.g. Applicant
+    created/updated fields are on child model instead of parent Person model due to conflicting reverse query name for other child models e.g. Doctor
     """
-    created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="created_by")
+    created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="applicant_created_by")
     created_date = models.DateTimeField(auto_now_add=True)
     # Putting blank & null = True for updated fields 
-    updated_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="updated_by", blank=True, null=True)
+    updated_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="applicant_updated_by", blank=True, null=True)
     updated_date = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self):

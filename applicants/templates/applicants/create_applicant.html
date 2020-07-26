@@ -1,0 +1,15 @@
+{% extends 'index/base.html' %}
+
+{% block body %}
+<form method='POST'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ a_form.as_p }}
+    {{ t_form.as_p }}
+    {{ e_form.as_p }}
+    <button type="submit">Create New Applicant</button>
+</form>
+<a href="{% url 'applicant_list' %}">Go back</a>
+<a href="{% url 'index-home' %}">Go home</a>
+
+{% endblock body %}

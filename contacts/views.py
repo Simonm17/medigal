@@ -22,3 +22,13 @@ class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['doctor'] = Doctor.objects.all()
         return context
+
+
+class TelephoneDetailView(DetailView):
+    model = Telephone
+
+class TelephoneUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Telephone
+    fields = '__all__'
+    template_name = 'contact/telephone_update.html'
+    success_message = 'Telephone number has been updated successfully!'

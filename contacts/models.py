@@ -97,7 +97,4 @@ class Person(models.Model):
     class Meta:
         abstract = True
 
-class Applicant(Person):
-    pass
-
 
