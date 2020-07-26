@@ -25,4 +25,4 @@ class Applicant(Person):
 
     # For UpdateView to reverse back to after form POST request
     def get_absolute_url(self):
-        return reverse('doctor_detail', kwargs={'pk': self.pk})
+        return reverse('applicant_detail', kwargs={'pk': self.pk})

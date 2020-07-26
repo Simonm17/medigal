@@ -11,23 +11,32 @@
     {% endif %}
 {% endblock jumbotron %}
 
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">Home</li>
+{% endblock %}
 
 {% block body %}
-
-    <div>
-        <ul>
-            <li><a href="#">Schedule a new appointment</a></li>
-            <li><a href="{% url 'doctor_list' %}">View Doctors</a></li>
-            <li><a href="{% url 'applicant_list' %}">View Applicants</a></li>
-        </ul>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <a class="" href="#">Schedule a new appointment</a>
+        </div>
+        <div class="col">
+            <a class="" href="{% url 'doctor_list' %}">View Doctors</a>
+        </div>
+        <div class="col">
+            <a class="" href="{% url 'applicant_list' %}">View Applicants</a>
+        </div>
     </div>
 
-    <div>
-        <p>Important Deadlines:</p>
-        <ul>
-            <li>[Applicant's name ]</li>
-            <li>[QME date] - [days left]</li>
-        </ul>
+    <div class="row">
+        <div class="col">
+            <p>Important Deadlines:</p>
+            <ul>
+                <li>[Applicant's name ]</li>
+                <li>[QME date] - [days left]</li>
+            </ul>
+        </div>
     </div>
-
+</div>
 {% endblock body %}

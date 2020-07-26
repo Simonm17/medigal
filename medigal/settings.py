@@ -132,6 +132,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/static/'
 
 LOGIN_REDIRECT_URL = 'index-home'
 LOGIN_URL = 'login'

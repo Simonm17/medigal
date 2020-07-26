@@ -1,11 +1,19 @@
 {% extends 'index/base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'index-home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'doctor_list' %}">Doctors</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'doctor_detail' object.id %}">{{ doctor.last_name }}, {{ doctor.first_name }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Update</li>
+{% endblock %}
+
 
 {% block body %}
-
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
     <button type="submit">Update</button>
 </form>
-
 {% endblock body %}

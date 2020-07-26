@@ -1,5 +1,11 @@
 {% extends 'index/base.html' %}
 
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'index-home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'applicant_list' %}">Applicants</a></li>
+    <li class="breadcrumb-item active" aria-current="page">New</li>
+{% endblock %}
+
 {% block body %}
 <form method='POST'>
     {% csrf_token %}

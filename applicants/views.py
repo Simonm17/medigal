@@ -68,5 +68,5 @@ class ApplicantDetailView(DetailView):
 class ApplicantUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Applicant
     fields = ['prefix', 'first_name', 'last_name', 'suffix']
-    template_name = 'applicant/applicant_update.html'
+    template_name = 'applicants/applicant_update.html'
     success_message = 'Contact detail has been updated successfully!'

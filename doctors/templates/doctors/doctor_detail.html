@@ -1,5 +1,12 @@
 {% extends 'index/base.html' %}
 
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'index-home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'doctor_list' %}">Doctors</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ doctor.last_name }}, {{ doctor.first_name }}</li>
+{% endblock %}
+
+
 {% block body %}
 
 <div class="container">
