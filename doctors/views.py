@@ -62,11 +62,13 @@ class DoctorDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['address'] = Address.objects.all()
+        context['telephone'] = Telephone.objects.all()
+        context['email'] = Email.objects.all()
         return context
 
 class DoctorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Doctor
-    fields = ['first_name', 'last_name']
+    fields = ['prefix', 'first_name', 'last_name', 'suffix']
     template_name = 'doctors/doctor_update.html'
     success_message = 'Contact detail has been updated successfully!'
 

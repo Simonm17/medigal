@@ -2,34 +2,60 @@
 
 {% block body %}
 
-<div>
-    <a href="{% url 'doctor_update' object.id %}"><h5>{{ doctor.prefix }} {{ doctor.last_name}}, {{ doctor.first_name }} {{ doctor.suffix }}</h5></a>
-    <div>
-        <h5>Address</h5>
-        </a>
-        {% for a in doctor.address.all %}
-            <p>{{ a.address_type }}:</p>
-            <a href="{% url 'address_update' a.id %}?next={% url 'doctor_detail' object.id %}">Update Address</a>
-            <p>{{ a.address }}</p>
-            <p>{{ a.suite_number }}</p>
-            <p>{{ a.city }}</p>
-            <p>{{ a.state }}</p>
-            <p>{{ a.zipcode }}</p>
-        {% endfor %}
-    </div>
-    <div>
-        <h5>Telephone</h5>
-        {% for t in doctor.telephone.all %}
-            <p>{{ t }}</p>
-        {% endfor %}
-    </div>
-    <div>
-        <h5>Email</h5>
-        {% for e in doctor.email.all %}
-            <p>{{ e }}</p>
-        {% endfor %}
-    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="d-flex flex-column">
+                <div class="">
+                    <h2>{{ doctor.first_name}} {{ doctor.last_name }}{% if doctor.suffix %}, {{ doctor.suffix }}{% endif %}</h2>
+                </div>
+                    {% for a in address %}
+                        <div class="d-flex">
+                            <div class="mr-2">
+                                <h6>{{ a.address_type }} Address:</h6>
+                                <p>{{ a.address }}{% if a.suite_number %}, {{ a.suite_number }}{% endif %}
+                                </p>
+                                <p>{{ a.city }}, {{ a.state }} {{ a.zipcode }}</p>
+                            </div>
+                            <div class="mx-2">
+                                <a href="{% url 'address_update' a.id %}?next={% url 'doctor_detail' object.id %}">Edit</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div>
+                        <a href="#">Add New Address</a>
+                    </div>
+                    
+                    <div>
+                        <h6>Telephone:</h6>
+                        <div class="d-flex">
+                            {% for t in telephone %}
+                                <div class="mr-2">
+                                    <p>{{ t.type }}: {{ t.number }}</p>
+                                </div>
+                                <div class="ml-2">
+                                    <a href="#">Edit</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
 
+                    <div>
+                        <h6>Email:</h6>
+                        <div class="d-flex">
+                            {% for e in email %}
+                                <div class="mr-2">
+                                    <p>{{ e.email }}</p>
+                                </div>
+                                <div class="ml-2">
+                                    <a href="#">Edit</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock body %}

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'crispy_forms',
 
     'index.apps.IndexConfig',
     'users.apps.UsersConfig',
@@ -123,6 +124,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+# For Crispy Forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/

@@ -1,22 +1,30 @@
 {% extends 'index/base.html' %}
 
 {% block body %}
-<div>
-    <a class="btn btn-outline-info" href="{% url 'doctor_list' %}">Go to Doctors</a>
-    <a class="btn btn-outline-success" href="#">Go to Applicants</a>
-</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-outline-info" href="{% url 'doctor_list' %}">Go to Doctors</a>
+            <a class="btn btn-outline-success" href="#">Go to Applicants</a>
+        </div>
+    </div>
 
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">Address</h5>
-        <h6 class="card-subtitle mb-4 text-muted">{{ address.address_type }}</h6>
-        <p>{{ address.address }}
-        {% if address.suite_number %}
-        , {{ address.suite_number }}
-        {% endif %}
-        </p>
-        <p>{{ address.city }}, {{ address.state }} {{ address.zipcode }}</p>
-        <a class="card-link" href="{% url 'address_update' object.id %}">Update Address</a>
-    </div>  
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Address</h5>
+                    <h6 class="card-subtitle mb-4 text-muted">{{ address.address_type }}</h6>
+                    <p>{{ address.address }}
+                    {% if address.suite_number %}
+                    , {{ address.suite_number }}
+                    {% endif %}
+                    </p>
+                    <p>{{ address.city }}, {{ address.state }} {{ address.zipcode }}</p>
+                    <a class="card-link" href="{% url 'address_update' object.id %}">Update Address</a>
+                </div>  
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
