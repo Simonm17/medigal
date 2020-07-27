@@ -43,7 +43,7 @@ def profile(request):
             form.save()
             messages.success(request, f'Your account has been updated!')
             print(f'user updated successfully.')
-            return redirect('index-home')
+            return redirect('profile')
     else:
         form = UserUpdateForm(instance=request.user)
     return render(request, 'users/profile.html', context={'form': form, 'title': 'Profile'})

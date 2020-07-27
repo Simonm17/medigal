@@ -1,10 +1,16 @@
 {% extends 'index/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'index-home' %}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Login</li>
+{% endblock %}
 
 {% block body %}
 <form method='POST'>
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
+    {{ form|crispy }}
+    <button class="btn btn-outline-primary" type="submit">Login</button>
 </form>
 
 <a href="{% url 'password_reset' %}">Forgot password?</a>

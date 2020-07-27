@@ -1,21 +1,28 @@
 {% extends 'index/base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'index-home' %}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Profile</li>
+{% endblock %}
 
 {% block body %}
 
-{{ user.email }}
-{{ user.first_name }}
-{{ user.last_name }}
-{{ user.date_of_birth }}
+{% if user.first_name and user.last_name %}
+    <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+{% else %}
+    {{ user.email }}
+{% endif %}
 
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
     <p>Date joined: {{ user.date_joined }}</p>
     <p>Last login: {{ user.last_login }}</p>
-    <button type="submit">Update Profile</button>
+    <button class="btn btn-outline-primary" type="submit">Update Profile</button>
+    <a class="btn btn-outline-danger btn-sm" href="{% url 'change_password' %}">Change Password</a>
 </form>
-
-<a href="{% url 'change_password' %}">Change Password</a>
 
 <a href="{% url 'index-home' %}">Return home</a>
 <a href="{% url 'logout' %}">Logout</a>
