@@ -13,8 +13,9 @@
     <div class="row">
         <div class="col-md-8">
             <div class="d-flex flex-column">
-                <div class="">
+                <div class="d-flex">
                     <h2>{{ doctor.first_name}} {{ doctor.last_name }}{% if doctor.suffix %}, {{ doctor.suffix }}{% endif %}</h2>
+                    <a class="ml-4 align-self-end" href="{% url 'doctor_update' object.id %}">Edit</a>
                 </div>
                     {% for a in doctor.address.all %}
                         <div class="d-flex">
