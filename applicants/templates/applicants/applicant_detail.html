@@ -25,7 +25,7 @@
                                 <p>{{ a.city }}, {{ a.state }} {{ a.zipcode }}</p>
                             </div>
                             <div class="mx-2">
-                                <a href="{% url 'address_update' a.id %}?next={% url 'applicant_detail' object.id %}">Edit</a>
+                                <a href="{% url 'address_update' a.id %}?next={{ request.path }}">Edit</a>
                             </div>
                         </div>
                     {% endfor %}
@@ -41,7 +41,7 @@
                                     <p>{{ t.type }}: {{ t.number }}</p>
                                 </div>
                                 <div class="ml-2">
-                                    <a href="#">Edit</a>
+                                    <a href="{% url 'telephone_update' t.id %}?next={{ request.path }}">Edit</a>
                                 </div>
                             {% endfor %}
                         </div>
@@ -55,7 +55,7 @@
                                     <p>{{ e.email }}</p>
                                 </div>
                                 <div class="ml-2">
-                                    <a href="#">Edit</a>
+                                    <a href="{% url 'email_update' e.id %}?next={{ request.path }}">Edit</a>
                                 </div>
                             {% endfor %}
                         </div>
