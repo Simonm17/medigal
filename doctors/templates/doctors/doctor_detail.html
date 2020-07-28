@@ -33,7 +33,7 @@
                         </div>
                     {% endfor %}
                     <div>
-                        <a href="#">Add New Address</a>
+                        <a href="{% url 'address_create' %}?next={{ request.path }}">Add New Address</a>
                     </div>
                     
                     <div>
