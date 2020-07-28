@@ -1,9 +1,11 @@
 {% extends 'index/base.html' %}
 
 {% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{% url 'index-home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'applicant_list' %}">Applicants</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ applicant.last_name }}, {{ applicant.first_name }}</li>
+    <ol class="breadcrumb"> 
+        <li class="breadcrumb-item"><a href="{% url 'index-home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'applicant_list' %}">Applicants</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ applicant.last_name }}, {{ applicant.first_name }}</li>
+    </ol>
 {% endblock %}
 
 

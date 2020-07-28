@@ -2,8 +2,10 @@
 {% load crispy_forms_tags %}
 
 {% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{% url 'index-home' %}">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Login</li>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'index-home' %}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Login</li>
+    </ol>
 {% endblock %}
 
 {% block body %}

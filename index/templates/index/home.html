@@ -2,18 +2,16 @@
 
 
 {% block jumbotron %}
-    {% if user.is_authenticated %}
-        {% if user.first_name %}
-            <h5>Hello, {{ user.first_name }}!</h5>
-        {% else %}
-            <h5>Welcome, {{ user.email }}!</h5>
+    <div class="jumbotron">
+        {% if user.is_authenticated %}
+            {% if user.first_name %}
+                <h5>Hello, {{ user.first_name }}!</h5>
+            {% else %}
+                <h5>Welcome, {{ user.email }}!</h5>
+            {% endif %}
         {% endif %}
-    {% endif %}
+    </div>
 {% endblock jumbotron %}
-
-{% block breadcrumb %}
-    <li class="breadcrumb-item active" aria-current="page">Home</li>
-{% endblock %}
 
 {% block body %}
 <div class="container">
