@@ -21,10 +21,23 @@ class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         context['next_url'] = self.request.GET.get('next')
         return context
 
+
     def get_success_url(self):
         next_url = self.request.GET.get('next')
         if next_url:
             print(f'CUSTOM: next_url = {next_url}')
+            split_url = next_url.split('/')
+            get_url_model = split_url[1]
+            get_url_id = int(split_url[2])
+            print(f'{self.object.id}')
+            if get_url_model == 'doctors':
+                doctor = Doctor.objects.get(id=get_url_id)
+                doctor.address.add(Address.objects.get(id=self.object.id))
+                doctor.save()
+            elif get_url_model == 'applicants':
+                applicant = Applicant.objects.get(id=self.object.id)
+                applicant.address.add(Address.objects.last())
+                applicant.save()
             return next_url
 
 class AddressDetailView(DetailView):
