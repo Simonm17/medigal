@@ -48,6 +48,9 @@
                                 </div>
                             {% endfor %}
                         </div>
+                        <div>
+                            <a href="{% url 'telephone_create' %}?next={{ request.path }}">Add New Telephone</a>
+                        </div>
                     </div>
 
                     <div>
@@ -61,6 +64,9 @@
                                     <a href="{% url 'email_update' e.id %}?next={{ request.path }}">Edit</a>
                                 </div>
                             {% endfor %}
+                        </div>
+                        <div>
+                            <a href="{% url 'email_create' %}?next={{ request.path }}">Add New Email</a>
                         </div>
                     </div>
             </div>
