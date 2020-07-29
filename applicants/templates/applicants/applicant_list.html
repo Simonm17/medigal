@@ -9,11 +9,46 @@
 
 
 {% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 d-flex flex-column">
+            <div class="text-center">
+                <h3 class="border-bottom mb-4 pb-2">Applicants</h3>
+            </div>
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th scope="col-md-8">Name</th>
+                        <th scope="col">Created by</th>
+                        <th scope="col">Updated by</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for applicant in applicants %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'applicant_detail' applicant.id %}">
+                                    {{ applicant.last_name }}, {{ applicant.first_name}}
+                                </a>
+                            </td>
+                            <td>
+                                <p class="small">{{ applicant.created_by }} on {{ applicant.created_date|date:"M d, Y" }}</p>
+                            </td>
+                            <td>
+                                <p class="small">{{ applicant.updated_by }} on {{ applicant.updated_date|date:"M d, Y" }}</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-outline-primary" href="{% url 'add_applicant' %}">New Applicant</a>
+    </div>
+</div>
 
-{% for applicant in applicants %}
-    <a href="{% url 'applicant_detail' applicant.id %}">{{ applicant.last_name }}, {{ applicant.first_name}}</a>
-{% endfor %}
 
-<a href="{% url 'add_applicant' %}">Add new Applicant</a>
+
 
 {% endblock body %}

@@ -52,7 +52,7 @@ class ApplicantListView(ListView):
     model = Applicant
     template_name = 'applicant/applicant_list.html'
     context_object_name = 'applicants'
-    ordering = ['first_name']
+    ordering = ['last_name']
 
 class ApplicantDetailView(DetailView):
     # for template context, use 'applicant' or 'object'
