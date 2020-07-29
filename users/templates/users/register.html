@@ -8,11 +8,10 @@
     </ol>
 {% endblock %}
 
-{% block body %}
-<form method='POST'>
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button class="btn btn-outline-primary" type="submit">Register</button>
-</form>
-
-{% endblock body %}
+{% block users %}
+    <form method='POST'>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-outline-primary" type="submit">Register</button>
+    </form>
+{% endblock %}

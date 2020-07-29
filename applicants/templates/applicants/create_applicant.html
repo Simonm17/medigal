@@ -9,10 +9,9 @@
     </ol>
 {% endblock %}
 
-{% block body %}
-<div class="container">
+{% block row %}
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <form method='POST'>
                 {% csrf_token %}
                 <fieldset class="">
@@ -32,5 +31,4 @@
             </form>
         </div>
     </div>
-</div>
-{% endblock body %}
+{% endblock %}

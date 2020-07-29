@@ -7,9 +7,7 @@
     </ol>
 {% endblock %}
 
-
-{% block body %}
-<div class="container">
+{% block row %}
     <div class="row">
         <div class="col-md-8 d-flex flex-column">
             <div class="text-center">
@@ -46,9 +44,4 @@
     <div>
         <a class="btn btn-outline-primary" href="{% url 'add_applicant' %}">New Applicant</a>
     </div>
-</div>
-
-
-
-
-{% endblock body %}
+{% endblock %}

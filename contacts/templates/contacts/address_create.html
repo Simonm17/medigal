@@ -2,9 +2,7 @@
 {% load crispy_forms_tags %}
 
 
-{% block body %}
-
-<div class="container">
+{% block row %}
     <div class="row">
         <div class="col-md-8">
             <form method="POST" action="?next={{ next_url }}">
@@ -17,6 +15,4 @@
             </form>
         </div>
     </div>
-</div>
-
-{% endblock body %}
+{% endblock %}

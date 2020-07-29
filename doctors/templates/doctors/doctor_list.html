@@ -8,12 +8,13 @@
 {% endblock %}
 
 
-{% block body %}
-
-{% for doctor in doctors %}
-    <a href="{% url 'doctor_detail' doctor.id %}">{{ doctor.last_name }}, {{ doctor.first_name}}</a>
-{% endfor %}
-
-<a href="{% url 'add_doctor' %}">Add a doctor</a>
-
-{% endblock body %}
+{% block row %}
+    <div class="row">
+        <div class="col-md-7">
+            {% for doctor in doctors %}
+                <a href="{% url 'doctor_detail' doctor.id %}">{{ doctor.last_name }}, {{ doctor.first_name}}</a>
+            {% endfor %}
+            <a href="{% url 'add_doctor' %}">Add a doctor</a>
+        </div>
+    </div>
+{% endblock %}

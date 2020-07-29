@@ -1,7 +1,6 @@
 {% extends 'index/base.html' %}
 
-{% block body %}
-<div class="container-fluid">
+{% block row %}
     <div class="row">
         <div class="col">
             <a class="btn btn-outline-info" href="{% url 'doctor_list' %}">Go to Doctors</a>
@@ -26,5 +25,4 @@
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

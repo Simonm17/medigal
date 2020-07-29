@@ -9,16 +9,14 @@
     </ol>
 {% endblock %}
 
-{% block body %}
-<div class="container">
+{% block row %}
     <div class="row">
         <div class="col-md-6">
             <form method='POST'>
                 {% csrf_token %}
                 <fieldset class="">
                     <legend class="border-bottom mb-4">Add new Doctor</legend>
-                    <h6>Full Name</h6>
-                    {{ form|crispy }}
+                    {{ d_form|crispy }}
                     <hr />
                     <h6>Address</h6>
                     {{ a_form|crispy }}
@@ -32,5 +30,4 @@
             </form>
         </div>
     </div>
-</div>
-{% endblock body %}
+{% endblock %}

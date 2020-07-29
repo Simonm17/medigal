@@ -5,4 +5,4 @@ from .models import Applicant
 class ApplicantCreationForm(ModelForm):
     class Meta:
         model = Applicant
-        fields = ['first_name', 'last_name']
+        fields = ['prefix', 'first_name', 'last_name', 'suffix']
