@@ -10,16 +10,17 @@
 
 
 {% block body %}
-
 <div class="container">
     <div class="row">
         <div class="col-md-8">
             <div class="d-flex flex-column">
-                <div class="">
+                <div class="d-flex">
                     <h2>{% if applicant.prefix %}{{ applicant.prefix }}{% endif %} {{ applicant.first_name}} {{ applicant.last_name }}{% if applicant.suffix %}, {{ applicant.suffix }}{% endif %}</h2>
+                    <a class="ml-4 align-self-end" href="{% url 'applicant_update' object.id %}">Edit</a>
                 </div>
+                <div class="border border-primary rounded p-2 mb-4">
                     {% for a in applicant.address.all %}
-                        <div class="d-flex">
+                        <div class="d-flex border-bottom">
                             <div class="mr-2">
                                 <h6>{{ a.address_type }} Address:</h6>
                                 <p>{{ a.address }}{% if a.suite_number %}, {{ a.suite_number }}{% endif %}
@@ -35,29 +36,28 @@
                     <div>
                         <a href="{% url 'address_create' %}?next={{ request.path }}">Add New Address</a>
                     </div>
-                    
-                    <div>
-                        <h6>Telephone:</h6>
+                </div>
+                <div class="border border-warning rounded p-2 mb-4">
+                    <h6>Telephone:</h6>
+                    {% for t in applicant.telephone.all %}
                         <div class="d-flex">
-                            {% for t in applicant.telephone.all %}
-                                <div class="mr-2">
-                                    <p>{{ t.type }}: {{ t }} {% if t.extension %}ext. {{ t.extension }}{% endif %}</p>
-                                </div>
-                                <div class="ml-2">
-                                    <a href="{% url 'telephone_update' t.id %}?next={{ request.path }}">Edit</a>
-                                    <a href="{% url 'telephone_delete' t.id %}?next={{ request.path }}">Delete</a>
-                                </div>
-                            {% endfor %}
+                            <div class="mr-2">
+                                <p>{{ t.type }}: {{ t }} {% if t.extension %}ext. {{ t.extension }}{% endif %}</p>
+                            </div>
+                            <div class="ml-2">
+                                <a href="{% url 'telephone_update' t.id %}?next={{ request.path }}">Edit</a>
+                                <a href="{% url 'telephone_delete' t.id %}?next={{ request.path }}">Delete</a>
+                            </div>
                         </div>
-                        <div>
-                            <a href="{% url 'telephone_create' %}?next={{ request.path }}">Add New Telephone</a>
-                        </div>
+                    {% endfor %}
+                    <div>
+                        <a href="{% url 'telephone_create' %}?next={{ request.path }}">Add New Telephone</a>
                     </div>
-
-                    <div>
-                        <h6>Email:</h6>
+                </div>
+                <div class="border border-success rounded p-2">
+                    <h6>Email:</h6>
+                    {% for e in applicant.email.all %}
                         <div class="d-flex">
-                            {% for e in applicant.email.all %}
                                 <div class="mr-2">
                                     <p>{{ e.email }}</p>
                                 </div>
@@ -65,12 +65,12 @@
                                     <a href="{% url 'email_update' e.id %}?next={{ request.path }}">Edit</a>
                                     <a href="{% url 'email_delete' e.id %}?next={{ request.path }}">Delete</a>
                                 </div>
-                            {% endfor %}
                         </div>
-                        <div>
-                            <a href="{% url 'email_create' %}?next={{ request.path }}">Add New Email</a>
-                        </div>
+                    {% endfor %}
+                    <div>
+                        <a href="{% url 'email_create' %}?next={{ request.path }}">Add New Email</a>
                     </div>
+                </div>
             </div>
         </div>
     </div>
