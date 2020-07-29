@@ -71,4 +71,3 @@ class DoctorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     fields = ['prefix', 'first_name', 'last_name', 'suffix']
     template_name = 'doctors/doctor_update.html'
     success_message = 'Contact detail has been updated successfully!'
-

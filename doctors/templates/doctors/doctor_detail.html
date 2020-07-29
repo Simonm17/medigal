@@ -29,6 +29,7 @@
                             </div>
                             <div class="mx-2">
                                 <a href="{% url 'address_update' a.id %}?next={{ request.path }}">Edit</a>
+                                <a href="{% url 'address_delete' a.id %}?next={{ request.path }}">Delete</a>
                             </div>
                         </div>
                     {% endfor %}
@@ -45,6 +46,7 @@
                                 </div>
                                 <div class="ml-2">
                                     <a href="{% url 'telephone_update' t.id %}?next={{ request.path }}">Edit</a>
+                                    <a href="{% url 'telephone_delete' t.id %}?next={{ request.path }}">Delete</a>
                                 </div>
                             {% endfor %}
                         </div>
@@ -62,6 +64,7 @@
                                 </div>
                                 <div class="ml-2">
                                     <a href="{% url 'email_update' e.id %}?next={{ request.path }}">Edit</a>
+                                    <a href="{% url 'email_delete' e.id %}?next={{ request.path }}">Delete</a>
                                 </div>
                             {% endfor %}
                         </div>

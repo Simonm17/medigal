@@ -55,6 +55,26 @@ class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         if next_url:
             return next_url
 
+class AddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Address
+    success_message = 'Address has been deleted successfully!'
+    template_name = 'contacts/address_delete.html'
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super().delete(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['next_url'] = self.request.GET.get('next') # pass `next` parameter received from previous page to the context
+        return context
+
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+
+
 
 class TelephoneCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Telephone
@@ -102,6 +122,25 @@ class TelephoneUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         if next_url:
             return next_url
 
+class TelephoneDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Telephone
+    success_message = 'Contact number has been deleted successfully!'
+    template_name = 'contacts/telephone_delete.html'
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super().delete(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['next_url'] = self.request.GET.get('next') # pass `next` parameter received from previous page to the context
+        return context
+
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+
 
 class EmailCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Email
@@ -141,6 +180,25 @@ class EmailUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['doctor'] = Doctor.objects.all()
         context['applicant'] = Applicant.objects.all()
+        context['next_url'] = self.request.GET.get('next') # pass `next` parameter received from previous page to the context
+        return context
+
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+
+class EmailDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Email
+    success_message = 'Email has been deleted successfully!'
+    template_name = 'contacts/email_delete.html'
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super().delete(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context['next_url'] = self.request.GET.get('next') # pass `next` parameter received from previous page to the context
         return context
 

@@ -1,0 +1,27 @@
+{% extends 'index/base.html' %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <form method="POST" action="?next={{ next_url }}">
+                {% csrf_token %}
+                <fieldset>
+                    <legend class="border-bottom mb-4">Delete Address</legend>
+                    <h6 class="mb-4">You are about to permanently delete the following address:</h6>
+                    <p>{{ address.address }}
+                        {% if address.suite_number %}
+                        , {{ address.suite_number }}
+                        {% endif %}
+                        </p>
+                        <p>{{ address.city }}, {{ address.state }} {{ address.zipcode }}</p>
+                </fieldset>
+                <button class="btn btn-danger" type="submit">Delete</button>
+                <a class="btn btn-outline-info" href="{{ next_url }}">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
