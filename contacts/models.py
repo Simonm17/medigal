@@ -26,22 +26,22 @@ class Telephone(models.Model):
         ('H', 'Home'),
         ('W', 'Work'),
         ('S', 'School'),
-        ('Mo', 'Mobile'),
-        ('Ma', 'Main'),
-        ('HF', 'Home Fax'),
-        ('WF', 'Work Fax'),
+        ('C', 'Cell'),
+        ('M', 'Main'),
+        ('F', 'Fax'),
         ('P', 'Pager'),
         ('O', 'Other'),
     ]
+    type = models.CharField(max_length=2, choices=TYPE, default='M')
     number = models.IntegerField()
-    type = models.CharField(max_length=2, choices=TYPE, default='Ma')
+    extension = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         num = str(self.number)
         if len(num) == 10:
-            return f'{num[:3]}-{num[3:6]}-{num[6:]}'
+            return f'({num[:3]}) {num[3:6]}-{num[6:]}'
         elif len(num) == 11:
-            return f'({num[0]}) {num[1:4]}-{num[4:7]}-{num[7:]}'
+            return f'{num[0]} ({num[1:4]})-{num[4:7]}-{num[7:]}'
         else:
             return num
 
