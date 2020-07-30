@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'contacts.apps.ContactsConfig',
     'doctors.apps.DoctorsConfig',
     'applicants.apps.ApplicantsConfig',
+    'company.apps.CompanyConfig',
     
 ]
 

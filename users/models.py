@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+from company.models import Company
 
 class Manager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -39,6 +40,11 @@ class User(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+
+    """ Company fields """
+    # keep deleted on cascade for company so that old users will not have any access to previous datafiles
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True)
+    is_company_admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

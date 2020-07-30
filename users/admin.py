@@ -4,6 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import User
+from company.models import Company
 
 
 class UserCreationForm(forms.ModelForm):
@@ -42,7 +43,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'password', 'date_of_birth', 'is_active', 'is_staff', 'is_admin')
+        fields = ('email', 'first_name', 'last_name', 'password', 'date_of_birth', 'is_active', 'is_staff', 'is_admin', 'company', 'is_company_admin')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -52,8 +53,8 @@ class UserChangeForm(forms.ModelForm):
 
 
 class UserAdmin(BaseUserAdmin):
-    list_display = ('email', 'date_joined', 'last_login', 'is_staff', 'is_admin')
-    list_filter = ('is_admin', 'is_staff')
+    list_display = ('email', 'date_joined', 'last_login', 'is_staff', 'is_admin', 'company')
+    list_filter = ('is_admin', 'is_staff', 'company')
 
     search_fields = ('email',)
     ordering = ('email',)
@@ -62,7 +63,8 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'date_of_birth')}),
-        ('Permissions', {'fields': ('is_staff', 'is_admin')})
+        ('Permissions', {'fields': ('is_staff', 'is_admin')}),
+        ('Company', {'fields': ('company', 'is_company_admin')}),
     )
 
     add_fieldsets = (

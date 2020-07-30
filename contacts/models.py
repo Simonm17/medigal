@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import User
+import users.models
 from django.urls import reverse
 
 
