@@ -23,16 +23,14 @@ class Address(models.Model):
 
 class Telephone(models.Model):
     TYPE = [
-        ('H', 'Home'),
-        ('W', 'Work'),
-        ('S', 'School'),
-        ('C', 'Cell'),
-        ('M', 'Main'),
-        ('F', 'Fax'),
-        ('P', 'Pager'),
-        ('O', 'Other'),
+        ('Main', 'Main'),        
+        ('Home', 'Home'),
+        ('Work', 'Work'),
+        ('Cell', 'Cell'),
+        ('Fax', 'Fax'),
+        ('Other', 'Other'),
     ]
-    type = models.CharField(max_length=2, choices=TYPE, default='M')
+    type = models.CharField(max_length=5, choices=TYPE, default='Main')
     number = models.IntegerField()
     extension = models.IntegerField(blank=True, null=True)
 
