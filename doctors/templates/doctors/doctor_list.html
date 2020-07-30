@@ -1,20 +1,47 @@
 {% extends 'index/base.html' %}
 
 {% block breadcrumb %}
-    <ol class="breadcrumb">
+    <ol class="breadcrumb"> 
         <li class="breadcrumb-item"><a href="{% url 'index-home' %}">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Doctors</li>
     </ol>
 {% endblock %}
 
-
 {% block row %}
     <div class="row">
-        <div class="col-md-7">
-            {% for doctor in doctors %}
-                <a href="{% url 'doctor_detail' doctor.id %}">{{ doctor.last_name }}, {{ doctor.first_name}}</a>
-            {% endfor %}
-            <a href="{% url 'add_doctor' %}">Add a doctor</a>
+        <div class="col-md-8 d-flex flex-column">
+            <div class="text-center">
+                <h3 class="border-bottom mb-4 pb-2">Doctors</h3>
+            </div>
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Created by</th>
+                        <th scope="col">Updated by</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for doctor in doctors %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'doctor_detail' doctor.id %}">
+                                    {{ doctor.last_name }}, {{ doctor.first_name}}
+                                </a>
+                            </td>
+                            <td>
+                                <p class="small">{{ doctor.created_by }} on {{ doctor.created_date|date:"M d, Y" }}</p>
+                            </td>
+                            <td>
+                                <p class="small">{{ doctor.updated_by }} on {{ doctor.updated_date|date:"M d, Y" }}</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
+    </div>
+    <div>
+        <a class="btn btn-outline-primary" href="{% url 'add_doctor' %}">New Doctor</a>
     </div>
 {% endblock %}
