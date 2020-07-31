@@ -1,3 +1,5 @@
+from django import forms
+
 """
 PLAN:
     Users will be given a form to request a company creation. 
@@ -12,3 +14,6 @@ PLAN:
     Once company is created, user will be made staff.
 
 """
+
+class RequestForm(forms.Form):
+    pass
