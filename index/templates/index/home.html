@@ -15,6 +15,14 @@
 {% block row %}
     <div class="row">
         <div class="col">
+            {% if not user.company %}
+                <p>Want to register your firm? <a href="{% url 'request_company' %}">Click here</a></p>
+                
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
             <a class="" href="#">Schedule a new appointment</a>
         </div>
         <div class="col">

@@ -1,5 +1,8 @@
 from django import forms
 
+from django.forms import ModelForm, Textarea, TextInput
+from .models import Company, Request
+
 """
 PLAN:
     Users will be given a form to request a company creation. 
@@ -15,5 +18,15 @@ PLAN:
 
 """
 
-class RequestForm(forms.Form):
-    pass
+class RequestForm(ModelForm):
+    class Meta:
+        model = Request
+        fields = [
+            'company_name', 'company_address', 'company_telephone', 'company_website'
+        ]
+
+
+class CompanyCreationForm(ModelForm):
+    class Meta:
+        model = Company
+        fields = '__all__'
