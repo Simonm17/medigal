@@ -1,10 +1,28 @@
 {% extends 'index/base.html' %}
+{% load crispy_forms_tags %}
 
-{% block users %}
+{% block breadcrumb %}
+    <ol class="breadcrumb"> 
+        <li class="breadcrumb-item"><a href="{% url 'index-home' %}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Request to register company</li>
+    </ol>
+{% endblock %}
 
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
-</form>
-
+{% block row %}
+<div class="row">
+    <div class="col-lg-8">
+        <h1>Request to register your company!</h1>
+        <h5>Benefits of registering your company:</h5>
+        <ul>
+            <li>View and work with QME/AME appointments created by other staff members of your company</li>
+            <li>Instant messaging <strong>(COMING SOON)</strong></li>
+        </ul>
+    </div>
+    <div class="col border-left">
+        <form method="post">{% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Save">
+        </form>
+    </div>
+</div>
 {% endblock %}

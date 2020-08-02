@@ -30,6 +30,8 @@ class Request(models.Model):
     # staff validation fields
     notes = models.TextField(blank=True)
     reviewed = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=False)
+    denied = models.BooleanField(default=False)
     
     def __str__(self):
         return f'Request ticket #{self.id}'
