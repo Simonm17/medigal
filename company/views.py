@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Company, Request
 from users.models import User
+
 class RequestCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Request
     fields = [
@@ -17,6 +19,29 @@ class RequestCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         form.instance.requester = self.request.user
         return super().form_valid(form)
 
+class RequestListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = Request
+    context_object_name = 'requests'
+    template_name = 'company/request_list.html'
+    ordering = ['request_date']
+    paginate_by = 100
+
+    # TODO: MAKE SURE THIS TEST_FUNC PASSES CONDITION!
+    def test_func(self):
+        if self.request.user.is_staff:
+            return True
+        return False
+
+#NOTE: not routed
+class CompanyCreateView(CreateView):
+    model = Company
+    fields = '__all__'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # TODO: Need to be able to get id of Request object from previously clicked Request object from ListView
+        context['request'] = Request.objects.get()  # <-- edit
+        return context
 
 """
 CompanyCreateView will require a filtering of the Request object where it displays ONE object with reviewed = False

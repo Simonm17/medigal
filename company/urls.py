@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import RequestCreateView
+from .views import RequestCreateView, RequestListView
 
 urlpatterns = [
-    path('request/', RequestCreateView.as_view(), name='request_company'),
+    path('new-request/', RequestCreateView.as_view(), name='request_company'),
+    path('requests/', RequestListView.as_view(), name='request_list'),
 ]

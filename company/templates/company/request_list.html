@@ -1,0 +1,11 @@
+{% extends 'index/base.html' %}
+
+{% block row %}
+    <div class="row">
+        <div class="col">
+            {% for request in requests %}
+                <a href="#">{{ request }}</a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
