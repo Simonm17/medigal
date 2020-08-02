@@ -15,24 +15,24 @@
             </div>
             <table class="table text-center">
                 <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Created by</th>
-                        <th scope="col">Updated by</th>
+                    <tr class="d-flex">
+                        <th class="col-lg-6">Name</th>
+                        <th class="col-lg-3 d-none d-sm-block">Created by</th>
+                        <th class="col-lg-3 d-none d-sm-block">Updated by</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for applicant in applicants %}
-                        <tr>
-                            <td>
+                        <tr class="d-flex">
+                            <td class="col-lg-6">
                                 <a href="{% url 'applicant_detail' applicant.id %}">
                                     {{ applicant.last_name }}, {{ applicant.first_name}}
                                 </a>
                             </td>
-                            <td>
+                            <td class="col-lg-3 d-none d-sm-block">
                                 <p class="small">{{ applicant.created_by }} on {{ applicant.created_date|date:"M d, Y" }}</p>
                             </td>
-                            <td>
+                            <td class="col-lg-3 d-none d-sm-block">
                                 <p class="small">{{ applicant.updated_by }} on {{ applicant.updated_date|date:"M d, Y" }}</p>
                             </td>
                         </tr>

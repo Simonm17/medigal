@@ -11,16 +11,26 @@
 {% block row %}
 <div class="row">
     <div class="col-lg-8">
-        <h1>Request to register your company!</h1>
+        <h1 class="mb-5">Request to register your company!</h1>
         <h5>Benefits of registering your company:</h5>
         <ul>
             <li>View and work with QME/AME appointments created by other staff members of your company</li>
             <li>Instant messaging <strong>(COMING SOON)</strong></li>
         </ul>
+        <hr>
+        <h5>How to request to register your company:</h5>
+        <ul>
+            <li>Input your company name, full address, and office number.</li>
+            <li>We will verify your request by verifying your email domain with your company website.</li>
+            <li>If you do not have a company website or a company-specific domain, you may be asked to provide additional informatino or documentation to verify proof.</li>
+        </ul>
     </div>
     <div class="col border-left">
         <form method="post">{% csrf_token %}
-            {{ form|crispy }}
+            <fieldset>
+                <legend class="border-bottom mb-3 pb-2">Request Form</legend>
+                {{ form|crispy }}
+            </fieldset>
             <input type="submit" value="Save">
         </form>
     </div>
