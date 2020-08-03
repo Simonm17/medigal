@@ -3,9 +3,12 @@
 {% block row %}
     <div class="row">
         <div class="col">
-            {% for request in requests %}
-                <a href="#">{{ request }}</a>
-            {% endfor %}
+            <ul class="list-group list-group-flush">
+                {% for request in requests %}
+                <li class="list-group-item"><a href="{% url 'create_company' %}?requestid={{ request.id }}">{{ request }}</a></li>
+                {% endfor %}                
+              </ul>
+
         </div>
     </div>
 {% endblock %}

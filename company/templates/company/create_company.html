@@ -1,0 +1,20 @@
+{% extends 'index/base.html' %}
+
+{% block row %}
+    <div class="row">
+        <div class="col">
+            <h1>Company Creation Form</h1>
+            <form method='POST'>
+                <fieldset>
+                    {{ form }}
+                    <button type="submit">Process</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div>
+        Request ID: {{ request_id }}
+        REQUEST CONTEXT: {{ request.requester }}
+    </div>
+
+{% endblock %}

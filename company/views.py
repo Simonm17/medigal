@@ -26,21 +26,27 @@ class RequestListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     ordering = ['request_date']
     paginate_by = 100
 
-    # TODO: MAKE SURE THIS TEST_FUNC PASSES CONDITION!
     def test_func(self):
         if self.request.user.is_staff:
             return True
+        # False returns 403 page (permission denied)
         return False
+
+class RequestReviewView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
+    model = Request
+    
 
 #NOTE: not routed
 class CompanyCreateView(CreateView):
     model = Company
     fields = '__all__'
+    template_name = 'company/create_company.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # TODO: Need to be able to get id of Request object from previously clicked Request object from ListView
-        context['request'] = Request.objects.get()  # <-- edit
+        context['request_id'] = self.request.GET.get('requestid')
+        context['request'] = Request.objects.get(id=context['request_id'])
         return context
 
 """

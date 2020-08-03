@@ -14,16 +14,26 @@
 
 {% block row %}
     <div class="row">
-        <div class="col">
-            {% if not user.company %}
-                <p>Want to register your firm? <a href="{% url 'request_company' %}">Click here</a></p>
-                
+        <div class="col-4 border border-info rounded">
+            <h2 class="border-bottom">Law Firm Name Placeholder</h2>
+
+            {% if not user.company and not requester %}
+                <p>Want to register your firm? 
+                    <a href="{% url 'request_company' %}">
+                        Click here
+                    </a>
+                </p>
+            {% endif %}
+
+            {% if requester %}
+                <p>Company register status: <span class="text-success font-weight-bold">Pending</span></p>
+                <a href="#">View your request</a>
             {% endif %}
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <a class="" href="#">Schedule a new appointment</a>
+            <h2><a class="" href="#">Schedule a new appointment</a></h2>
         </div>
         <div class="col">
             <a class="" href="{% url 'doctor_list' %}">View Doctors</a>

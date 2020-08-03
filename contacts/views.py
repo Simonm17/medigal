@@ -45,6 +45,7 @@ class AddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['title'] = 'Update Address'
         context['doctor'] = Doctor.objects.all()
         context['applicant'] = Applicant.objects.all()
         context['next_url'] = self.request.GET.get('next') # pass `next` parameter received from previous page to the context
