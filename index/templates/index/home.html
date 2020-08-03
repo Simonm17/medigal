@@ -14,22 +14,24 @@
 
 {% block row %}
     <div class="row">
+        {% if user.is_authenticated %}
         <div class="col-4 border border-info rounded">
-            <h2 class="border-bottom">Law Firm Name Placeholder</h2>
+                <h2 class="border-bottom">Law Firm Name Placeholder</h2>
 
-            {% if not user.company and not requester %}
-                <p>Want to register your firm? 
-                    <a href="{% url 'request_company' %}">
-                        Click here
-                    </a>
-                </p>
-            {% endif %}
+                {% if not user.company and not requester %}
+                    <p>Want to register your firm? 
+                        <a href="{% url 'request_company' %}">
+                            Click here
+                        </a>
+                    </p>
+                {% endif %}
 
-            {% if requester %}
-                <p>Company register status: <span class="text-success font-weight-bold">Pending</span></p>
-                <a href="#">View your request</a>
-            {% endif %}
+                {% if requester %}
+                    <p>Company register status: <span class="text-success font-weight-bold">Pending</span></p>
+                    <a href="{% url 'request_detail' user.id %}">View your request</a>
+                {% endif %}
         </div>
+        {% endif %}
     </div>
     <div class="row">
         <div class="col">

@@ -18,6 +18,7 @@ class RequestCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         form.instance.requester = self.request.user
         return super().form_valid(form)
 
+    
 
 class RequestDetailView(DetailView):
     model = Request
