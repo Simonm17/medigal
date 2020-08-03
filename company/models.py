@@ -1,6 +1,8 @@
 from django.db import models
 from contacts.models import Address, Telephone, Email
 import users.models
+from django.urls import reverse
+
 
 class Company(models.Model):
     APPLICANT = 'APP'
@@ -20,7 +22,7 @@ class Company(models.Model):
 
 class Request(models.Model):
     # user submission fields
-    requester = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    requester = models.OneToOneField('users.User', on_delete=models.CASCADE)
     request_date = models.DateTimeField(auto_now_add=True)
     company_name = models.CharField(max_length=250) # doesn't need unique=True becaue Company model field already has unique validation
     company_address = models.TextField()
@@ -35,3 +37,6 @@ class Request(models.Model):
     
     def __str__(self):
         return f'Request ticket #{self.id}'
+
+    def get_absolute_url(self):
+        return reverse('request_detail', kwargs={'pk': self.pk})

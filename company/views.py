@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -12,12 +12,30 @@ class RequestCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         'company_name', 'company_address', 'company_telephone', 'company_website'
     ]
     template_name = 'company/request.html'
-    success_message = 'Your request has been submitted and is pending review. You will receive an email with updates on your request.'
-    success_url = '/'
+    success_message = 'Your request has been submitted and is pending review. In the meatime, you may review and make any changes.'
 
     def form_valid(self, form):
         form.instance.requester = self.request.user
         return super().form_valid(form)
+
+
+class RequestDetailView(DetailView):
+    model = Request
+    template_name = 'company/request_detail.html'
+
+class RequestUpdateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Request
+    fields = [
+        'company_name', 'company_address', 'company_telephone', 'company_website'
+    ]
+    template_name = 'company/request_update.html'
+
+    def test_func(self):
+        if self.request.user.is_staff or self.request.user:
+            return True
+        # False returns 403 page (permission denied)
+        return False
+
 
 class RequestListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Request
@@ -32,9 +50,6 @@ class RequestListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         # False returns 403 page (permission denied)
         return False
 
-class RequestReviewView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
-    model = Request
-    
 
 #NOTE: not routed
 class CompanyCreateView(CreateView):
