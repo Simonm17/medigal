@@ -18,25 +18,6 @@ class RequestCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         form.instance.requester = self.request.user
         return super().form_valid(form)
 
-    
-
-class RequestDetailView(LoginRequiredMixin, DetailView):
-    model = Request
-    template_name = 'company/request_detail.html'
-
-    def test_func(self):
-        # verify if logged in user == requester
-        # user = self.request.user
-        if self.request.user.is_staff:
-            return True
-        else:
-        # False returns 403 page (permission denied)
-            return False
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'View your company register request ticket'
-
 class RequestUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Request
     fields = [
@@ -55,6 +36,14 @@ class RequestUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         if self.request.user.is_staff or self.request.user:
             return True
         # False returns 403 page (permission denied)
+        return False
+
+class RequestDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    model = Request
+
+    def test_func(self):
+        if self.request.user.is_staff:
+            return True
         return False
 
 class RequestListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
