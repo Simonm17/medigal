@@ -14,6 +14,7 @@ def home(request):
         'datetime': datetime.datetime.now(),  # displays current local timezone
         'user': request.user,
     }
+
     if request.user.is_authenticated:
         try:
             requester = Request.objects.get(requester=request.user)
