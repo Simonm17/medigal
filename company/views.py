@@ -42,8 +42,13 @@ class RequestDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Request
 
     def test_func(self):
-        if self.request.user.is_staff:
+        """ Checks if current user is site staff or Request user. 
+        If true, grant permission.
+        If false, return 403 error. """
+        self.requesting_user = self.get_object()
+        if self.request.user.is_staff or self.request.user == self.requesting_user.requester:
             return True
+        # False returns 403 page (permission denied)
         return False
 
 class RequestListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -54,9 +59,9 @@ class RequestListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     paginate_by = 100
 
     def test_func(self):
-        if self.request.user.is_staff:
+        self.requesting_user = self.get_object()
+        if self.request.user.is_staff or self.request.user == self.requesting_user.requester:
             return True
-        # False returns 403 page (permission denied)
         return False
 
 
