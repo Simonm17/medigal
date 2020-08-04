@@ -11,7 +11,7 @@ class RequestAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Request', {'fields': ('requester', 'request_date', 'company_name', 'company_telephone', 'company_website',)}),
-        ('Staff Actions', {'fields' : ('notes', 'reviewed')})
+        ('Staff Actions', {'fields' : ('notes', 'reviewed', 'accepted', 'denied')})
     )
 
     filter_horizontal = ()

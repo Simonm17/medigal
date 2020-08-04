@@ -27,7 +27,7 @@
                 {% endif %}
 
                 {% if requester %}
-                    <p>Company status: <span class="text-success font-weight-bold">Request pending</span></p>
+                    <p>Company status: <span class="text-warning font-weight-bold">Request pending</span></p>
                     <a href="{% url 'request_detail' requester.id %}">View your request</a>
                 {% endif %}
         </div>
