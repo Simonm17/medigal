@@ -49,13 +49,18 @@ def add_doctor(request):
     })
 
 
-class DoctorListView(ListView):
+class DoctorListView(LoginRequiredMixin, ListView):
     model = Doctor
     template_name = 'doctors/doctor_list.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'doctors'
     ordering = ['last_name']
 
-class DoctorDetailView(DetailView):
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Doctor.objects.all()
+        return Doctor.objects.filter(created_by=self.request.user)
+
+class DoctorDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     """ for template context, use 'doctor' or 'object' """
     model = Doctor
 
@@ -66,8 +71,20 @@ class DoctorDetailView(DetailView):
         context['email'] = Email.objects.all()
         return context
 
-class DoctorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    def test_func(self):
+        self.doctor = self.get_object()
+        if self.request.user.is_staff or self.request.user == self.doctor.created_by:
+            return True
+        return False
+
+class DoctorUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = Doctor
     fields = ['prefix', 'first_name', 'last_name', 'suffix']
     template_name = 'doctors/doctor_update.html'
     success_message = 'Contact detail has been updated successfully!'
+
+    def test_func(self):
+        self.doctor = self.get_object()
+        if self.request.user.is_staff or self.request.user == self.doctor.created_by:
+            return True
+        return False

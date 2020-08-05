@@ -1,6 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import get_user_model
 from .models import Applicant
 from contacts.models import Address, Telephone, Email
+from users.models import User
 from .forms import ApplicantCreationForm
 from contacts.forms import AddressForm, TelephoneForm, EmailForm
 from django.views.generic import ListView, DetailView, UpdateView
@@ -48,13 +50,18 @@ def add_applicant(request):
         'title': 'Add new Applicant',
     })
 
-class ApplicantListView(ListView):
+class ApplicantListView(LoginRequiredMixin, ListView):
     model = Applicant
     template_name = 'applicant/applicant_list.html'
     context_object_name = 'applicants'
     ordering = ['last_name']
 
-class ApplicantDetailView(DetailView):
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Applicant.objects.all()
+        return Applicant.objects.filter(created_by=self.request.user)
+
+class ApplicantDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     # for template context, use 'applicant' or 'object'
     model = Applicant
 
@@ -65,8 +72,20 @@ class ApplicantDetailView(DetailView):
         context['email'] = Email.objects.all()
         return context
 
-class ApplicantUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    def test_func(self):
+        self.applicant = self.get_object()
+        if self.request.user.is_staff or self.request.user == self.applicant.created_by:
+            return True
+        return False
+
+class ApplicantUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = Applicant
     fields = ['prefix', 'first_name', 'last_name', 'suffix']
     template_name = 'applicants/applicant_update.html'
     success_message = 'Contact detail has been updated successfully!'
+
+    def test_func(self):
+        self.applicant = self.get_object()
+        if self.request.user.is_staff or self.request.user == self.applicant.created_by:
+            return True
+        return False

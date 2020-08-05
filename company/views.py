@@ -18,7 +18,7 @@ class RequestCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         form.instance.requester = self.request.user
         return super().form_valid(form)
 
-class RequestUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class RequestUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = Request
     fields = [
         'company_name', 'company_address', 'company_telephone', 'company_website'
@@ -33,6 +33,7 @@ class RequestUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return context
 
     def test_func(self):
+        self.requesting_user = self.get_object()
         if self.request.user.is_staff or self.request.user == self.requesting_user.requester:
             return True
         # False returns 403 page (permission denied)
@@ -64,7 +65,7 @@ class RequestListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 
 #NOTE: not routed
-class CompanyCreateView(CreateView):
+class CompanyCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Company
     fields = '__all__'
     template_name = 'company/create_company.html'
@@ -75,6 +76,11 @@ class CompanyCreateView(CreateView):
         context['request_id'] = self.request.GET.get('requestid')
         context['request'] = Request.objects.get(id=context['request_id'])
         return context
+
+    def test_func(self):
+        if self.request.user.is_staff:
+            return True
+        return False
 
 """
 CompanyCreateView will require a filtering of the Request object where it displays ONE object with reviewed = False
