@@ -1,20 +1,30 @@
 {% extends 'index/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block row %}
     <div class="row">
-        <div class="col">
+        <div class="col-6">
+            <h1>{{ request }}</h1> 
+            <h5>requested by {{ request.requester }}</h5>
+            <p>Company name: {{ request.company_name }}</p>
+            <p>Company address: {{ request.company_address }}</p>
+            <p>Company telephone: {{ request.company_telephone }}</p>
+            <p>Company website: {{ request.company_website }}</p>
+        </div>
+        <div class="col-6">
             <h1>Company Creation Form</h1>
             <form method='POST'>
                 <fieldset>
-                    {{ form }}
-                    <button type="submit">Process</button>
+                    {{ form|crispy }}
+                    <hr />
+                    {{ address_form|crispy }}
+                    <hr />
+                    {{ telephone_form|crispy }}
+                    <hr />
+                    {{ email_form|crispy }}
+                    <button class="btn btn-outline-info" type="submit">Process</button>
                 </fieldset>
             </form>
         </div>
     </div>
-    <div>
-        Request ID: {{ request_id }}
-        REQUEST CONTEXT: {{ request.requester }}
-    </div>
-
 {% endblock %}

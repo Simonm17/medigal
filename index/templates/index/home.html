@@ -14,43 +14,48 @@
 
 {% block row %}
     <div class="row">
-        {% if user.is_authenticated %}
-        <div class="col-4 border border-info rounded">
-                <h2 class="border-bottom">Law Firm Name Placeholder</h2>
 
-                {% if not user.company and not requester %}
-                    <p>Want to register your firm? 
-                        <a href="{% url 'request_company' %}">
-                            Click here
-                        </a>
-                    </p>
-                {% endif %}
+    <!-- AUTHENTICATED USER VIEW -->
+    {% if user.is_authenticated %}
+        <div class="col-8">
+            <div>
+                <h1 class="text-center border-bottom mb-4 pb-2">QME/AME</h1>
+                <h2 class="border rounded text-center"><a href="#">Schedule new appointment</a></h2>
+                <a class="" href="{% url 'doctor_list' %}">View Doctors</a>
+                <a class="" href="{% url 'applicant_list' %}">View Applicants</a>
+            </div>
+            <div>
+                <p>Important Deadlines:</p>
+                <ul>
+                    <li>[Applicant's name ]</li>
+                    <li>[QME date] - [days left]</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-4">
+                <div class="border border-info rounded p-2">
+                        <h2 class="border-bottom">Law Firm Name Placeholder</h2>
 
-                {% if requester %}
-                    <p>Company status: <span class="text-warning font-weight-bold">Request pending</span></p>
-                    <a href="{% url 'request_detail' requester.id %}">View your request</a>
-                {% endif %}
+                        {% if not user.company and not requester %}
+                            <p>Want to register your firm? 
+                                <a href="{% url 'request_company' %}">
+                                    Click here
+                                </a>
+                            </p>
+                        {% endif %}
+
+                        {% if requester %}
+                            <p>Company status: <span class="text-warning font-weight-bold">Request pending</span></p>
+                            <a href="{% url 'request_detail' requester.id %}">View your request</a>
+                        {% endif %}
+                </div>
         </div>
-        {% endif %}
+
     </div>
-    <div class="row">
+    {% else %}
+        <!-- UNAUTHENTICATED USER VIEW -->
         <div class="col">
-            <h2><a class="" href="#">Schedule a new appointment</a></h2>
+            
         </div>
-        <div class="col">
-            <a class="" href="{% url 'doctor_list' %}">View Doctors</a>
-        </div>
-        <div class="col">
-            <a class="" href="{% url 'applicant_list' %}">View Applicants</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <p>Important Deadlines:</p>
-            <ul>
-                <li>[Applicant's name ]</li>
-                <li>[QME date] - [days left]</li>
-            </ul>
-        </div>
-    </div>
+    {% endif %}
 {% endblock row %}

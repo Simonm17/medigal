@@ -5,6 +5,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Company, Request
 from users.models import User
+from contacts.models import Address, Telephone, Email
+from contacts.forms import AddressForm, TelephoneForm, EmailForm
 
 class RequestCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Request
@@ -64,10 +66,9 @@ class RequestListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return False
 
 
-#NOTE: not routed
 class CompanyCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Company
-    fields = '__all__'
+    fields = ['name', 'party_type']
     template_name = 'company/create_company.html'
 
     def get_context_data(self, **kwargs):
@@ -75,7 +76,13 @@ class CompanyCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         # TODO: Need to be able to get id of Request object from previously clicked Request object from ListView
         context['request_id'] = self.request.GET.get('requestid')
         context['request'] = Request.objects.get(id=context['request_id'])
+        context['address_form'] = AddressForm()
+        context['telephone_form'] = TelephoneForm()
+
         return context
+
+    # def form_valid(self, form, a_form, t_form, e_form):
+
 
     def test_func(self):
         if self.request.user.is_staff:
@@ -88,8 +95,6 @@ In the CCV there will also need to be some script where once company is created,
 """
 
 """
-We will make a request detail view, where staff and requester have permissions to view the request pending approval/denial. Use def test_func to filter the two users.
-
 Learn signal sending for when user is accepted.
 NEED TO MODIFY REQUEST FIELD TO ADD rejected_booleanfield.
 
