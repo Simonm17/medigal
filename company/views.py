@@ -97,6 +97,7 @@ class CompanyCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 def user_check(user):
     return user.is_staff
 
+# Todo: need to make a denied function
 @user_passes_test(user_check)
 def create_company(request):
     if request.method == 'POST':
@@ -110,6 +111,7 @@ def create_company(request):
             a_form.save()
             t_form.save()
             e_form.save()
+
             company = Company.objects.last()
             company.address.add(Address.objects.last())
             company.telephone.add(Telephone.objects.last())
@@ -117,11 +119,19 @@ def create_company(request):
             company.save()
             messages.success(request, f'Company has been successfully created.')
 
-            # Request object alteration
+            # Once company is accepted and created, check off request ticket.
             requested_object = Request.objects.get(id=request_id)
             requested_object.reviewed = True
             requested_object.accepted = True
             requested_object.save()
+
+            # Add company to user model's company field
+            get_email = requested_object.requester # get requester's email
+            get_user = User.objects.get(email=get_email) # get user from User's model
+            get_user.company = company # add the newly created company to user's company field
+            get_user.is_company_admin = True # Give user admin status
+            get_user.save()
+
             return redirect('request_list')
     else:
         form = CompanyCreationForm()

@@ -49,7 +49,7 @@
                                 <p>Company status: <span class="text-warning font-weight-bold">Request pending</span></p>
                                 <a href="{% url 'request_detail' requester.id %}">View your request</a>
                             {% elif requester.reviewed and requester.accepted %}
-
+                                <h5>{{ user.company }}</h5>
                             {% endif %}
                         {% endif %}
                 </div>
