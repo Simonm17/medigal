@@ -34,7 +34,7 @@
         </div>
         <div class="col-4">
                 <div class="border border-info rounded p-2">
-                        <h2 class="border-bottom">Law Firm Name Placeholder</h2>
+                        <h2 class="border-bottom">Law Firm Dashboard</h2>
 
                         {% if not user.company and not requester %}
                             <p>Want to register your firm? 
@@ -45,8 +45,12 @@
                         {% endif %}
 
                         {% if requester %}
-                            <p>Company status: <span class="text-warning font-weight-bold">Request pending</span></p>
-                            <a href="{% url 'request_detail' requester.id %}">View your request</a>
+                            {% if not requester.reviewed %}
+                                <p>Company status: <span class="text-warning font-weight-bold">Request pending</span></p>
+                                <a href="{% url 'request_detail' requester.id %}">View your request</a>
+                            {% elif requester.reviewed and requester.accepted %}
+
+                            {% endif %}
                         {% endif %}
                 </div>
         </div>

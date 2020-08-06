@@ -20,20 +20,30 @@
                 <a class="btn btn-outline-info m-2" href="{% url 'index-home' %}">Return Home</a>
                 <a class="btn btn-outline-warning m-2" href="{% url 'request_update' object.id %}">Update Ticket</a>
                 {% if user.is_staff %}
-                    <a class="btn btn-outline-danger m-2" href="#">Review Request</a>
+                    <a class="btn btn-outline-danger m-2" href="{% url 'create_company' %}?requestid={{ object.id }}">Process Request</a>
                 {% endif %}
             </div>
         </div>
         <div class="col-3">
-            <p class="font-weight-bold my-auto border rounded border-outline-info p-3 m-4">
-                Review status: 
-                {% if not object.reviewed %}
-                    <span class="text-warning">Pending review</span>
-                {% else %}
-                    <span class="text-info">Reviewed</span>
+            <div class="border rounded border-outline-info p-3 m-4">
+                <p class="font-weight-bold my-auto">
+                    Review status: 
+                    {% if not object.reviewed %}
+                        <span class="text-warning">Pending review</span>
+                    {% else %}
+                        <span class="text-info">Reviewed</span>
+                    {% endif %}
+                </p>
+                {% if object.reviewed %}
+                    <p class="font-weight-bold my-auto">Decision:
+                        {% if object.accepted %}
+                            <span class="text-success">Accepted</span>
+                        {% else %}
+                            <span class="text-dark">Denied</span>
+                        {% endif %}
+                    </p>
                 {% endif %}
-            </p>
-
+            </div>
         </div>
     </div>
 {% endblock %}

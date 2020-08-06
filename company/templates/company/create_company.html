@@ -13,15 +13,16 @@
         </div>
         <div class="col-6">
             <h1>Company Creation Form</h1>
-            <form method='POST'>
+            <form method="POST"">
+                {% csrf_token %}
                 <fieldset>
                     {{ form|crispy }}
                     <hr />
-                    {{ address_form|crispy }}
+                    {{ a_form|crispy }}
                     <hr />
-                    {{ telephone_form|crispy }}
+                    {{ t_form|crispy }}
                     <hr />
-                    {{ email_form|crispy }}
+                    {{ e_form|crispy }}
                     <button class="btn btn-outline-info" type="submit">Process</button>
                 </fieldset>
             </form>

@@ -2,11 +2,15 @@ from django.shortcuts import render, redirect, reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Company, Request
+from .forms import CompanyCreationForm
 from users.models import User
 from contacts.models import Address, Telephone, Email
 from contacts.forms import AddressForm, TelephoneForm, EmailForm
+from django.contrib.auth.decorators import user_passes_test
+
 
 class RequestCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Request
@@ -19,6 +23,7 @@ class RequestCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         form.instance.requester = self.request.user
         return super().form_valid(form)
+
 
 class RequestUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = Request
@@ -88,6 +93,51 @@ class CompanyCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         if self.request.user.is_staff:
             return True
         return False
+
+def user_check(user):
+    return user.is_staff
+
+@user_passes_test(user_check)
+def create_company(request):
+    if request.method == 'POST':
+        form = CompanyCreationForm(request.POST)
+        a_form = AddressForm(request.POST)
+        t_form = TelephoneForm(request.POST)
+        e_form = EmailForm(request.POST)
+        request_id = request.GET.get('requestid')
+        if form.is_valid() and a_form.is_valid() and t_form.is_valid() and e_form.is_valid():
+            form.save()
+            a_form.save()
+            t_form.save()
+            e_form.save()
+            company = Company.objects.last()
+            company.address.add(Address.objects.last())
+            company.telephone.add(Telephone.objects.last())
+            company.email.add(Email.objects.last())
+            company.save()
+            messages.success(request, f'Company has been successfully created.')
+
+            # Request object alteration
+            requested_object = Request.objects.get(id=request_id)
+            requested_object.reviewed = True
+            requested_object.accepted = True
+            requested_object.save()
+            return redirect('request_list')
+    else:
+        form = CompanyCreationForm()
+        a_form = AddressForm()
+        t_form = TelephoneForm()
+        e_form = EmailForm()
+        request_id = request.GET.get('requestid')
+        requested_object = Request.objects.get(id=request_id)
+    return render(request, 'company/create_company.html', context={
+        'form': form,
+        'a_form': a_form,
+        't_form': t_form,
+        'e_form': e_form,
+        'request': Request.objects.get(id=request_id),
+        'title': 'Create new company',
+    })
 
 """
 CompanyCreateView will require a filtering of the Request object where it displays ONE object with reviewed = False

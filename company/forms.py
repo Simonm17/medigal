@@ -29,4 +29,4 @@ class RequestForm(ModelForm):
 class CompanyCreationForm(ModelForm):
     class Meta:
         model = Company
-        fields = '__all__'
+        fields = ['name', 'party_type']
