@@ -3,11 +3,11 @@ from .models import Doctor
 
 class DoctorAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'created_by', 'created_date',)
-    
+    list_filter = ('suffix',)
     # Can't use list filter on full name because full name is not a field, so use search field
     search_fields = ('first_name', 'last_name',)
 
-    readonly_fields = ('created_date', 'updated_date',)
+    readonly_fields = ('created_date',)
 
     fieldsets = (
         (None, {'fields': ('prefix', 'first_name', 'last_name', 'suffix')}),
