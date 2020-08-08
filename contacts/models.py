@@ -1,6 +1,8 @@
 from django.db import models
 import users.models
 from django.urls import reverse
+from django.utils import timezone
+
 
 
 class Address(models.Model):
@@ -94,9 +96,12 @@ class Person(models.Model):
 
     # Putting blank & null = True for updated fields 
     updated_by = models.ForeignKey("users.User", on_delete=models.PROTECT, related_name="%(class)s_updated_by", blank=True, null=True)
-    updated_date = models.DateTimeField(auto_now=True, blank=True, null=True)    
+    updated_date = models.DateTimeField(default=timezone.now, blank=True, null=True)    
 
     def __str__(self):
+        return f'{self.last_name}, {self.first_name}'
+
+    def full_name(self):
         return f'{self.last_name}, {self.first_name}'
 
     def get_created_date(self):

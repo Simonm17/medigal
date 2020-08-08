@@ -5,7 +5,7 @@ from contacts.models import Person
 class Doctor(Person):
 
     # Doctor preferences
-    by_mail = models.BooleanField(default=False)
+    by_hardcopy = models.BooleanField(default=False)
     by_cd = models.BooleanField(default=False)
     by_usb = models.BooleanField(default=False)
     by_email = models.BooleanField(default=False)
