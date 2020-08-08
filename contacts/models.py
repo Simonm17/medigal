@@ -10,15 +10,27 @@ class Address(models.Model):
         ('Physical', 'Physical'),
         ('Mailing', 'Mailing'),
     ]
+
+    UNIT_TYPE = [
+        ('APT', 'Apartment'),
+        ('STE', 'Suite'),
+        ('BLDG', 'Building'),
+        ('RM', 'Room'),
+        ('SPC', 'Space'),
+        ('UNIT', 'Unit'),
+        ('FL', 'Floor'),
+    ]
+    
     address_type = models.CharField(max_length=8, choices=ADDRESS_TYPE, default='PHYSICAL')
-    address = models.CharField(max_length=250)
-    suite_number = models.CharField(max_length=15, verbose_name='suite number', blank=True)
+    address1 = models.CharField(max_length=250)
+    unit_type = models.CharField(max_length=20, choices=UNIT_TYPE, blank=True, null=True)
+    address2 = models.CharField(max_length=100, blank=True, null=True)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=2)
     zipcode = models.IntegerField(verbose_name='Postal Code')
 
     def __str__(self):
-        return f'{self.address}, {self.city[0:5]}, {self.state} {self.zipcode}'
+        return f'{self.address1}, {self.city[0:5]}, {self.state} {self.zipcode}'
     
     def get_absolute_url(self):
         return reverse('address_detail', kwargs={'pk': self.pk})
