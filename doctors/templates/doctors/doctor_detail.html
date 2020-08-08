@@ -22,9 +22,9 @@
                         <div class="d-flex border-bottom">
                             <div class="mr-2">
                                 <h6>{{ a.address_type }} Address</h6>
-                                <p>{{ a.address }}{% if a.suite_number %}, {{ a.suite_number }}{% endif %}
+                                <p>{{ a.address1.upper }}{% if a.address2 %}, {{ a.unit_type }} {{ a.address2.upper }}{% endif %}
                                 </p>
-                                <p>{{ a.city }}, {{ a.state }} {{ a.zipcode }}</p>
+                                <p>{{ a.city.upper }}, {{ a.state.upper }} {{ a.zipcode }}</p>
                             </div>
                             <div class="mx-2">
                                 <a href="{% url 'address_update' a.id %}?next={{ request.path }}">Edit</a>

@@ -30,7 +30,7 @@ class Address(models.Model):
     zipcode = models.IntegerField(verbose_name='Postal Code')
 
     def __str__(self):
-        return f'{self.address1}, {self.city[0:5]}, {self.state} {self.zipcode}'
+        return f'{self.address1}, {self.city}, {self.state} {self.zipcode}'
     
     def get_absolute_url(self):
         return reverse('address_detail', kwargs={'pk': self.pk})
