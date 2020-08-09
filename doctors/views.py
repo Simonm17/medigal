@@ -3,7 +3,7 @@ from .models import Doctor
 from contacts.models import Address, Telephone, Email
 from .forms import DoctorCreationForm
 from contacts.forms import AddressForm, TelephoneForm, EmailForm
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView, FormView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -60,6 +60,7 @@ class DoctorListView(LoginRequiredMixin, ListView):
             return Doctor.objects.all()
         return Doctor.objects.filter(created_by=self.request.user)
 
+
 class DoctorDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     """ for template context, use 'doctor' or 'object' """
     model = Doctor
@@ -77,11 +78,37 @@ class DoctorDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
             return True
         return False
 
+
 class DoctorUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = Doctor
     fields = ['prefix', 'first_name', 'last_name', 'suffix']
     template_name = 'doctors/doctor_update.html'
     success_message = 'Contact detail has been updated successfully!'
+
+    def test_func(self):
+        self.doctor = self.get_object()
+        if self.request.user.is_staff or self.request.user == self.doctor.created_by:
+            return True
+        return False
+
+class DoctorPreferenceView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
+    model = Doctor
+    fields = ['by_hardcopy', 'by_cd', 'by_usb', 'by_email']
+    template_name = 'doctors/doctor_update.html'
+    success_message = 'Contact detail has been updated successfully!'
+
+    def test_func(self):
+        self.doctor = self.get_object()
+        if self.request.user.is_staff or self.request.user == self.doctor.created_by:
+            return True
+        return False
+
+
+class DoctorNoteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
+    model = Doctor
+    fields = ['notes']
+    template_name = 'doctors/doctor_update.html'
+    success_message = 'Contain detial has been updated successfully!'
 
     def test_func(self):
         self.doctor = self.get_object()

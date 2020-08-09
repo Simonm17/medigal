@@ -207,3 +207,4 @@ class EmailDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         next_url = self.request.GET.get('next')
         if next_url:
             return next_url
+

@@ -72,5 +72,16 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="border rounded border-dark m-2 p-4">
+                <h4>Notes</h4>
+                {% if not applicant.notes %}
+                    <p>Add notes about this contact!</p>
+                {% else %}
+                    <p>{{ applicant.notes }}</p>
+                {% endif %}
+                <a class="btn btn-outline-dark btn-sm" href="{% url 'applicant_notes' object.id %}">Edit</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

@@ -89,3 +89,15 @@ class ApplicantUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessag
         if self.request.user.is_staff or self.request.user == self.applicant.created_by:
             return True
         return False
+
+class ApplicantNoteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
+    model = Applicant
+    fields = ['notes']
+    template_name = 'applicants/applicant_update.html'
+    success_message = 'Contact detail has been updated successfully!'
+
+    def test_func(self):
+        self.applicant = self.get_object()
+        if self.request.user.is_staff or self.request.user == self.applicant.created_by:
+            return True
+        return False

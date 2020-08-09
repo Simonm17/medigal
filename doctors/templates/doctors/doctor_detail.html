@@ -75,5 +75,36 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="border border-dark rounded p-4 m-2">
+                <div>
+                    <h4 class="border-bottom mb-4 pb-3">Deliver medical index by:</h4>
+                    {% if doctor.by_hardcopy %}
+                        <p>✓ Hardcopy</p>
+                    {% endif %}
+                    {% if doctor.by_cd %}
+                        <p>✓ CD</p>
+                    {% endif %}
+                    {% if doctor.by_usb %}
+                        <p>✓ USB</p>
+                    {% endif %}
+                    {% if doctor.by_email %}
+                        <p>✓ Email</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <a class="btn btn-outline-info btn-sm" href="{% url 'doctor_preference' object.id %}?next={{ request.path }}">Update Preferences</a>
+                </div>
+            </div>
+            <div class="border rounded border-dark m-2 p-4">
+                <h4>Notes</h4>
+                {% if not doctor.notes %}
+                    <p>Add notes about this contact!</p>
+                {% else %}
+                    <p>{{ doctor.notes }}</p>
+                {% endif %}
+                <a class="btn btn-outline-dark btn-sm" href="{% url 'doctor_notes' object.id %}">Edit</a>
+            </div>
+        </div>
     </div>
 {% endblock row %}
