@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'doctors.apps.DoctorsConfig',
     'applicants.apps.ApplicantsConfig',
     'company.apps.CompanyConfig',
+    'scheduling.apps.SchedulingConfig',
     
 ]
 

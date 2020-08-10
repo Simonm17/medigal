@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Doctor
+from .models import Doctor, Specialty
 
 class DoctorAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'created_by', 'created_date',)
@@ -11,6 +11,7 @@ class DoctorAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {'fields': ('prefix', 'first_name', 'last_name', 'suffix')}),
+        ('Specialty', {'fields': ('specialty',)}),
         ('Contact Information', {'fields': ('address', 'telephone', 'email',)}),
         ('Preference', {'fields': ('by_hardcopy', 'by_cd', 'by_usb', 'by_email', 'notes')}),
         ('Users', {'fields': ('created_by', 'created_date', 'updated_by', 'updated_date')})
@@ -19,4 +20,5 @@ class DoctorAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Doctor, DoctorAdmin)
+admin.site.register(Specialty)
 
