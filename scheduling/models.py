@@ -21,9 +21,13 @@ class Appointment(models.Model):
     panel_number = models.CharField(max_length=120, blank=True, null=True)
 
     records_sent = models.BooleanField()
-    
     # datetimefields require null or else integrityerror
     records_sent_date = models.DateTimeField(blank=True, null=True)
+
+    records_received = models.BooleanField()
+    records_received_date = models.DateTimeField(blank=True, null=True)
+
+    notes = models.TextField(blank=True)
 
     # Following fields will be hidden from initial create view and displayed on updateview once applicant has attended or missed appt.
     # For attended, keep default None or else default = "didn't attend"
