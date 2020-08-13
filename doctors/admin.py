@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Doctor, Specialty
+from .models import Doctor
 
 class DoctorAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'created_by', 'created_date',)
@@ -20,5 +20,5 @@ class DoctorAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Doctor, DoctorAdmin)
-admin.site.register(Specialty)
+
 

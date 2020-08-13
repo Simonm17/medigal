@@ -1,0 +1,19 @@
+{% extends 'index/base.html' %}
+
+{% block row %}
+<div class="row">
+    <div class="col">
+
+        <form method="POST">{% csrf_token %}
+            {{ form.applicant }}
+            <label for="id_records_sent">Records Sent</label>
+            {{ form.records_sent }}
+            <button type="submit">Save</button>
+        </form>
+        {{ object }}
+        {{ object.applicant }}
+        {{ object.doctor.specialty }}
+    </div>
+</div>
+
+{% endblock %}

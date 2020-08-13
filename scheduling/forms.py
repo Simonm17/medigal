@@ -15,7 +15,7 @@ class NewAppointmentForm(ModelForm):
 
     class Meta:
         model = Appointment
-        fields = ['appointment_type', 'applicant', 'doctor', 'appointment_date', 'panel_number']
+        fields = ['appointment_type', 'exam_type', 'applicant', 'doctor', 'appointment_date', 'panel_number']
         # widgets = {
         #     'appointment_date': DateTimeInput(attrs={
         #         'type': 'datetime-local'

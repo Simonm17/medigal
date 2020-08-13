@@ -3,7 +3,8 @@ from django.urls import reverse
 from contacts.models import Person
 
 
-class Specialty(models.Model):
+class Doctor(Person):
+
     ACA = 'ACUPUNCTURE(ACA)'
     MAI = 'ALLERGY AND IMMUNOLOGY(MAI)'
     MAA = 'ANESTHESIOLOGY(MAA)'
@@ -93,14 +94,7 @@ class Specialty(models.Model):
         (MUU, 'UROLOGY'),
         (OTHER, 'OTHER')
     ]
-    field = models.CharField(max_length=100, choices=SPECIALTY)
-
-    def __str__(self):
-        return self.field
-
-
-class Doctor(Person):
-    specialty = models.ForeignKey(Specialty, on_delete=models.PROTECT)
+    specialty = models.CharField(max_length=200, choices=SPECIALTY)
 
     # Doctor preferences
     by_hardcopy = models.BooleanField(default=False)

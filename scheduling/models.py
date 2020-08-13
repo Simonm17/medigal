@@ -2,6 +2,8 @@ from django.db import models
 from applicants.models import Applicant
 from doctors.models import Doctor
 from users.models import User
+from django.urls import reverse
+
 
 # Create your models here.
 class Appointment(models.Model):
@@ -14,11 +16,21 @@ class Appointment(models.Model):
         (RESCHEDULED, 'Rescheduled')
     ]
 
+    AME = 'AME'
+    QME = 'QME'
+    EXAM_TYPE = [
+        (QME, 'QME'),
+        (AME, 'AME'),
+    ]
     appointment_type = models.CharField(max_length=20, choices=APPOINTMENT_TYPE)
+    exam_type = models.CharField(max_length=120, choices=EXAM_TYPE, default=QME)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
     appointment_date = models.DateTimeField()
     panel_number = models.CharField(max_length=120, blank=True, null=True)
+
+    scheduled_by = models.ForeignKey(User, on_delete=models.PROTECT)
+    scheduled_date = models.DateTimeField(auto_now_add=True)
 
     records_sent = models.BooleanField(default=False)
     # datetimefields require null or else integrityerror
@@ -40,3 +52,6 @@ class Appointment(models.Model):
     appt date/attneded will be blank on new object and 
     type=rescheduled
     """
+
+    def get_absolute_url(self):
+        return reverse('appointment', kwargs={'pk': self.pk})
