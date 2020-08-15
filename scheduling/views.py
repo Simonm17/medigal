@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Appointment
-from .forms import NewAppointmentForm
+from .forms import NewAppointmentForm, AppointmentViewForm
 from applicants.models import Applicant
 from doctors.models import Doctor
 from contacts.models import Address, Telephone, Email
@@ -12,7 +12,7 @@ from django.views.generic.edit import CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404
-
+from django.forms.widgets import DateTimeInput
 
 
 class NewAppointmentView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -31,13 +31,40 @@ class NewAppointmentView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         form.instance.scheduled_by = self.request.user
         return super().form_valid(form)
 
-class AppointmentView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Schedule a new medical-legal appointment'
+        return context
+
+class AppointmentListView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, ListView):
     model = Appointment
-    fields = '__all__'
+    context_object_name = 'appointment'
+
+    def get_queryset(self):
+        filter_users = Appointment.objects.filter(scheduled_by=self.request.user)
+        filter_order = filter_users.order_by('appointment_date')
+        return filter_order
+
+    def test_func(self):
+        if self.request.user.is_authenticated:
+            return True
+        return False
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'View scheduled appointments'
+        return context
+
+
+class AppointmentView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
+    model = Appointment
+    form_class = AppointmentViewForm
     template_name = 'scheduling/appointment_view.html'
+    success_message = 'Updated successfully!'
 
     def test_func(self):
         self.appointment = self.get_object()
-        if self.request.user.is_staff:
+        if self.request.user.is_staff or self.request.user == self.appointment.scheduled_by:
             return True
         return False
+

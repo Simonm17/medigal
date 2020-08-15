@@ -1,0 +1,32 @@
+{% extends 'index/base.html' %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb"> 
+        <li class="breadcrumb-item"><a href="{% url 'index-home' %}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Schedule new appointment</li>
+    </ol>
+{% endblock %}
+
+{% block row %}
+    <div class="row">
+        <div class="col">
+            {% for app in appointment %}
+                {% if not app.attended %}
+                    <div>
+                        <a href="{% url 'appointment' app.id %}">View</a>
+                        {{ app.applicant }}
+                        {{ app.appointment_date }}
+                    </div>
+                {% endif %}
+                {% if app.attended %}
+                    <div>
+                        <h5>Attended appointments:</h5>
+                        <a href="{% url 'appointment' app.id %}">View</a>
+                        {{ app.applicant }}
+                        {{ app.appointment_date }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -3,16 +3,28 @@
 {% block row %}
 <div class="row">
     <div class="col">
+        <h1>{{ object.appointment_type.upper }} {{ object.exam_type }} APPOINTMENT ({{ object.doctor.specialty }})</h1>
+        <h3>For {{ object.applicant }}</h3>
+        <h4>With {{ object.doctor }} on {{ object.appointment_date }}</h4>
 
+        <p>Location: {{ object.doctor.address.first }}</p>
         <form method="POST">{% csrf_token %}
-            {{ form.applicant }}
-            <label for="id_records_sent">Records Sent</label>
+
+            <hr />
             {{ form.records_sent }}
+            {{ form.records_sent_date }}
+
+            <hr />
+            {{ form.records_received }}
+            {{ form.records_received_date }}
+
+            <hr />
+            {{ form.notes }}
+
+            <hr />
+            {{ form.attended }}
             <button type="submit">Save</button>
         </form>
-        {{ object }}
-        {{ object.applicant }}
-        {{ object.doctor.specialty }}
     </div>
 </div>
 
