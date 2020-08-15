@@ -22,7 +22,7 @@ class Appointment(models.Model):
         (QME, 'QME'),
         (AME, 'AME'),
     ]
-    appointment_type = models.CharField(max_length=20, choices=APPOINTMENT_TYPE)
+    appointment_type = models.CharField(max_length=20, choices=APPOINTMENT_TYPE, default=INITIAL)
     exam_type = models.CharField(max_length=120, choices=EXAM_TYPE, default=QME)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
