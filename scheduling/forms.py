@@ -27,7 +27,7 @@ class AppointmentViewForm(ModelForm):
 
     class Meta:
         model = Appointment
-        fields = ['records_sent', 'records_sent_date', 'records_received', 'records_received_date', 'notes', 'attended']
+        fields = ['records_sent', 'records_received', 'notes', 'attended']
 
         
     # records_sent_date = forms.DateTimeField(

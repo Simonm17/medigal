@@ -22,8 +22,10 @@
                     <div>
                         <h5>Attended appointments:</h5>
                         <a href="{% url 'appointment' app.id %}">View</a>
-                        {{ app.applicant }}
-                        {{ app.appointment_date }}
+                        <p><del>
+                            {{ app.applicant }}
+                            {{ app.appointment_date }}
+                        </del></p>
                     </div>
                 {% endif %}
             {% endfor %}
