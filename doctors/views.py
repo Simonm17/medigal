@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, UpdateView, FormView
+from django.views.generic import (
+    ListView, DetailView, UpdateView, FormView
+)
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -62,7 +64,6 @@ class DoctorListView(LoginRequiredMixin, ListView):
 
 
 class DoctorDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
-    """ for template context, use 'doctor' or 'object' """
     model = Doctor
 
     def get_context_data(self, **kwargs):

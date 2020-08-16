@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import Address, Telephone, Email
 
+
 class AddressAdmin(admin.ModelAdmin):
     list_display = ('address1', 'city', 'state', 'zipcode',)
     list_filter = ('city', 'zipcode',)

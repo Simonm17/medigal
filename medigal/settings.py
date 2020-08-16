@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'applicants.apps.ApplicantsConfig',
     'company.apps.CompanyConfig',
     'scheduling.apps.SchedulingConfig',
-    
 ]
 
 AUTH_USER_MODEL = 'users.User'

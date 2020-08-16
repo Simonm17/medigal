@@ -19,7 +19,6 @@ class DoctorAdmin(admin.ModelAdmin):
     )
 
 
-
 admin.site.register(Doctor, DoctorAdmin)
 
 

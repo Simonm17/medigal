@@ -1,10 +1,5 @@
-from django import forms
 
-from django.forms import ModelForm, Textarea, TextInput
-from .models import Company, Request
-
-"""
-PLAN:
+""" PLAN:
     Users will be given a form to request a company creation. 
     form fields = modelForm of company
     Once form is submitted, it will be sent to django staff for review and manual creation.
@@ -15,10 +10,16 @@ PLAN:
     Staff will have access to createview which has test_func/userpassesmixin that returns django staff. don't mistaken with company staff.
 
     Once company is created, user will be made staff.
-
 """
 
+from django import forms
+
+from django.forms import ModelForm, Textarea, TextInput
+from .models import Company, Request
+
+
 class RequestForm(ModelForm):
+
     class Meta:
         model = Request
         fields = [
@@ -27,6 +28,7 @@ class RequestForm(ModelForm):
 
 
 class CompanyCreationForm(ModelForm):
+    
     class Meta:
         model = Company
         fields = ['name', 'party_type']

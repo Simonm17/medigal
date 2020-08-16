@@ -26,6 +26,5 @@ def home(request):
     return render(request, 'index/home.html', context)
 
 
-
 class Get404View(TemplateView):
     template_name = 'index/404.html'

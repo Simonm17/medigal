@@ -59,6 +59,7 @@ class Telephone(models.Model):
 
 class Email(models.Model):
     email = models.EmailField(max_length=250)
+
     def __str__(self):
         return self.email
 
@@ -107,7 +108,10 @@ class Person(models.Model):
 
     # Putting blank & null = True for updated fields 
     updated_by = models.ForeignKey("users.User", on_delete=models.PROTECT, related_name="%(class)s_updated_by", blank=True, null=True)
-    updated_date = models.DateTimeField(default=timezone.now, blank=True, null=True)    
+    updated_date = models.DateTimeField(default=timezone.now, blank=True, null=True)  
+
+    class Meta:
+        abstract = True
 
     def __str__(self):
         return f'{self.last_name}, {self.first_name}'
@@ -121,7 +125,5 @@ class Person(models.Model):
     def get_updated_date(self):
         return f'Updated on {self.updated_date} by {self.updated_by}'
 
-    class Meta:
-        abstract = True
 
 

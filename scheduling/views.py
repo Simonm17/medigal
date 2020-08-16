@@ -17,9 +17,6 @@ from .models import Appointment
 from .forms import NewAppointmentForm, AppointmentViewForm
 
 
-
-
-
 class NewAppointmentView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Appointment
     template_name = 'scheduling/new_appointment.html'
@@ -40,6 +37,7 @@ class NewAppointmentView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Schedule a new medical-legal appointment'
         return context
+
 
 class AppointmentListView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, ListView):
     model = Appointment
