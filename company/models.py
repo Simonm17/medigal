@@ -1,7 +1,9 @@
 from django.db import models
+from django.urls import reverse
+
 from contacts.models import Address, Telephone, Email
 import users.models
-from django.urls import reverse
+
 
 
 class Company(models.Model):

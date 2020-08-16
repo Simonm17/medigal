@@ -1,4 +1,5 @@
 from django.urls import path
+
 from .views import AddressCreateView, AddressUpdateView, AddressDeleteView, TelephoneCreateView, TelephoneUpdateView, TelephoneDeleteView, EmailCreateView, EmailUpdateView, EmailDeleteView
 
 urlpatterns = [

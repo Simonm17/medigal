@@ -1,9 +1,8 @@
 from django.db import models
-import users.models
 from django.urls import reverse
 from django.utils import timezone
 
-
+import users.models
 
 class Address(models.Model):
     ADDRESS_TYPE = [

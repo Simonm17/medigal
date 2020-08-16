@@ -1,7 +1,9 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Appointment
 from django.forms.widgets import DateTimeInput
+
+from .models import Appointment
+
 
 class NewAppointmentForm(ModelForm):
     appointment_date = forms.DateTimeField(

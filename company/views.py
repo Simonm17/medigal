@@ -4,12 +4,13 @@ from django.views.generic import ListView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Company, Request
-from .forms import CompanyCreationForm
+from django.contrib.auth.decorators import user_passes_test
+
 from users.models import User
 from contacts.models import Address, Telephone, Email
 from contacts.forms import AddressForm, TelephoneForm, EmailForm
-from django.contrib.auth.decorators import user_passes_test
+from .models import Company, Request
+from .forms import CompanyCreationForm
 
 
 class RequestCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):

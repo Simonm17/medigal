@@ -1,14 +1,14 @@
 from django.shortcuts import render, redirect
-from .models import Doctor
-from contacts.models import Address, Telephone, Email
-from .forms import DoctorCreationForm
-from contacts.forms import AddressForm, TelephoneForm, EmailForm
 from django.views.generic import ListView, DetailView, UpdateView, FormView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+from contacts.models import Address, Telephone, Email
+from contacts.forms import AddressForm, TelephoneForm, EmailForm
+from .models import Doctor
+from .forms import DoctorCreationForm
 
 @login_required
 def add_doctor(request):

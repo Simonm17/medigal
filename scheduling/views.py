@@ -1,10 +1,4 @@
-from django.shortcuts import render
-from .models import Appointment
-from .forms import NewAppointmentForm, AppointmentViewForm
-from applicants.models import Applicant
-from doctors.models import Doctor
-from contacts.models import Address, Telephone, Email
-from users.models import User
+from datetime import datetime
 
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, UpdateView
@@ -13,6 +7,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404
 from django.forms.widgets import DateTimeInput
+from django.shortcuts import render, redirect
+
+from applicants.models import Applicant
+from doctors.models import Doctor
+from contacts.models import Address, Telephone, Email
+from users.models import User
+from .models import Appointment
+from .forms import NewAppointmentForm, AppointmentViewForm
+
+
+
 
 
 class NewAppointmentView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -62,9 +67,20 @@ class AppointmentView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMix
     template_name = 'scheduling/appointment_view.html'
     success_message = 'Updated successfully!'
 
+
     def test_func(self):
         self.appointment = self.get_object()
         if self.request.user.is_staff or self.request.user == self.appointment.scheduled_by:
             return True
         return False
 
+    def form_valid(self, form_class):
+        form_class.save()
+        appt = self.object
+        if appt.records_sent or appt.records_received == True:
+            if appt.records_sent == True:
+                appt.records_sent_date = datetime.now()
+            if appt.records_received == True:
+                appt.records_received_date = datetime.now()
+            appt.save()
+        return super().form_valid(form_class)

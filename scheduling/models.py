@@ -1,9 +1,11 @@
+from django.urls import reverse
+from django.utils import timezone
 from django.db import models
+
 from applicants.models import Applicant
 from doctors.models import Doctor
 from users.models import User
-from django.urls import reverse
-from django.utils import timezone
+
 
 
 # Create your models here.

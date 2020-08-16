@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
-from users.models import User
-from .models import Address, Telephone, Email
-from doctors.models import Doctor
-from applicants.models import Applicant
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, UpdateView
 from django.views.generic.edit import CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
+
+from users.models import User
+from doctors.models import Doctor
+from applicants.models import Applicant
+from .models import Address, Telephone, Email
 
 
 class AddressCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):

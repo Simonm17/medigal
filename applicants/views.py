@@ -1,15 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
-from .models import Applicant
-from contacts.models import Address, Telephone, Email
-from users.models import User
-from .forms import ApplicantCreationForm
-from contacts.forms import AddressForm, TelephoneForm, EmailForm
 from django.views.generic import ListView, DetailView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
+from users.models import User
+from contacts.forms import AddressForm, TelephoneForm, EmailForm
+from contacts.models import Address, Telephone, Email
+from .forms import ApplicantCreationForm
+from .models import Applicant
 
 
 @login_required

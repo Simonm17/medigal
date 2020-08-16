@@ -11,12 +11,19 @@
         <form method="POST">{% csrf_token %}
 
             <hr />
-            {{ form.records_sent }}
-            {{ form.records_sent_date }}
+            {% if not object.records_sent %}
+                {{ form.records_sent }}
+            {% else %}
+                <p>Records sent on {{ object.records_sent_date }}</p>
+            {% endif %}
 
             <hr />
-            {{ form.records_received }}
-            {{ form.records_received_date }}
+            {% if not object.records_received %}
+                <label for="id_records_received">Records received</label>
+                {{ form.records_received }}
+            {% else %}
+                <p>Records sent on {{ object.records_received_date }}</p>
+            {% endif %}
 
             <hr />
             {{ form.notes }}
