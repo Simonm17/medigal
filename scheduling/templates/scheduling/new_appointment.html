@@ -1,9 +1,5 @@
 {% extends 'index/base.html' %}
 {% load crispy_forms_tags %}
-{% load bootstrap4 %}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-{{ form.media }}
 
 {% block breadcrumb %}
     <ol class="breadcrumb"> 
@@ -19,7 +15,7 @@
             {% csrf_token %}
             <fieldset>
                 <legend>Schedule New Appointment</legend>
-                {% bootstrap_form form %}
+                {{ form|crispy }}
             <button class="btn btn-outline-info" type="submit">Schedule</button>
             </fieldset>
 
