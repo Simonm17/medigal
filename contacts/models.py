@@ -108,7 +108,7 @@ class Person(models.Model):
 
     # Putting blank & null = True for updated fields 
     updated_by = models.ForeignKey("users.User", on_delete=models.PROTECT, related_name="%(class)s_updated_by", blank=True, null=True)
-    updated_date = models.DateTimeField(default=timezone.now, blank=True, null=True)  
+    updated_date = models.DateTimeField(blank=True, null=True)  
 
     class Meta:
         abstract = True

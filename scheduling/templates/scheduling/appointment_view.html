@@ -2,35 +2,48 @@
 
 {% block row %}
 <div class="row">
-    <div class="col">
+    <div class="col-md-8">
         <h1>{{ object.appointment_type.upper }} {{ object.exam_type }} APPOINTMENT ({{ object.doctor.specialty }})</h1>
         <h3>For {{ object.applicant }}</h3>
         <h4>With {{ object.doctor }} on {{ object.appointment_date }}</h4>
 
         <p>Location: {{ object.doctor.address.first }}</p>
         <form method="POST">{% csrf_token %}
+            <fieldset>
+                <div class="form-check">
+                    {{ form.records_sent }}
+                    <label for="id_records_sent" class="ml-2">Records sent</label>
+                    {% if object.records_sent %}
+                        on {{ object.records_sent_date }}
+                    {% endif %}
 
-            <hr />
-            {% if not object.records_sent %}
-                {{ form.records_sent }}
-            {% else %}
-                <p>Records sent on {{ object.records_sent_date }}</p>
-            {% endif %}
+                    <hr />
+                    {{ form.records_received }}
+                    <label for="id_records_received" class="ml-2">Records received</label>
+                    {% if object.records_received %}
+                        on {{ object.records_received_date }}
+                    {% endif %}
+                </div>
 
-            <hr />
-            {% if not object.records_received %}
-                <label for="id_records_received">Records received</label>
-                {{ form.records_received }}
-            {% else %}
-                <p>Records sent on {{ object.records_received_date }}</p>
-            {% endif %}
+                <hr />
+                <div class="form-group d-flex flex-column">
+                    <label for="id_notes">Notes</label>
+                    {{ form.notes }}
+                </div>
 
-            <hr />
-            {{ form.notes }}
+                <hr />
+                {% if object.attended %}
+                <div class="form-check text-success">
+                {% else %}
+                <div class="form-check">
+                {% endif %}
+                <label for="id_attended" class="mr-2">Attended</label>
+                {{ form.attended }}
+                </div>
 
-            <hr />
-            {{ form.attended }}
-            <button type="submit">Save</button>
+                <hr />
+                <button class="btn btn-outline-info" type="submit">Save</button>
+            </fieldset>
         </form>
     </div>
 </div>

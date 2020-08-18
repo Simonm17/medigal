@@ -8,6 +8,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404
 from django.forms.widgets import DateTimeInput
 from django.shortcuts import render, redirect
+from django.utils import timezone
 
 from applicants.models import Applicant
 from doctors.models import Doctor
@@ -61,7 +62,8 @@ class AppointmentListView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessag
 
 class AppointmentView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = Appointment
-    form_class = AppointmentViewForm
+    # form_class = AppointmentViewForm
+    fields = ['records_sent', 'records_received', 'notes', 'attended']
     template_name = 'scheduling/appointment_view.html'
     success_message = 'Updated successfully!'
 
@@ -72,13 +74,20 @@ class AppointmentView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMix
             return True
         return False
 
-    def form_valid(self, form_class):
-        form_class.save()
+    def form_valid(self, form):
         appt = self.object
-        if appt.records_sent or appt.records_received == True:
-            if appt.records_sent == True:
-                appt.records_sent_date = datetime.now()
-            if appt.records_received == True:
-                appt.records_received_date = datetime.now()
-            appt.save()
-        return super().form_valid(form_class)
+        if form.instance.records_sent:
+            appt.records_sent_date = timezone.now()
+        if form.instance.records_received:
+            appt.records_received_date = timezone.now()
+        return super().form_valid(form)
+
+    # def form_valid(self, form_class):
+    #     form_class.save()
+    #     appt = self.object
+    #     if appt.records_sent == True:
+    #         appt.records_sent_date = datetime.now()
+    #     if appt.records_received == True:
+    #         appt.records_received_date = datetime.now()
+    #     appt.save()
+    #     return super().form_valid(form_class)
