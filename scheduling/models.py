@@ -25,6 +25,13 @@ class Appointment(models.Model):
         (QME, 'QME'),
         (AME, 'AME'),
     ]
+
+    # Using init for saving datetimefields on UpdateView
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.b_records_sent = self.records_sent
+        self.b_records_received = self.records_received
+
     appointment_type = models.CharField(max_length=20, choices=APPOINTMENT_TYPE, default=INITIAL)
     exam_type = models.CharField(max_length=120, choices=EXAM_TYPE, default=QME)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
@@ -36,7 +43,7 @@ class Appointment(models.Model):
     scheduled_date = models.DateTimeField(auto_now_add=True)
 
     records_sent = models.BooleanField(default=False)
-    # datetimefields require null or else integrityerror
+    # datetimefields require null or else integrityerror when using blank=True
     records_sent_date = models.DateTimeField(blank=True, null=True)
 
     records_received = models.BooleanField(default=False)

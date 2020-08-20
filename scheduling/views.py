@@ -75,19 +75,12 @@ class AppointmentView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMix
         return False
 
     def form_valid(self, form):
-        appt = self.object
-        if form.instance.records_sent:
-            appt.records_sent_date = timezone.now()
-        if form.instance.records_received:
-            appt.records_received_date = timezone.now()
+        """ Update sent/received datetimes to current time
+        when sent/received is checked from false to true.
+        """
+        appointment = self.object
+        if form.instance.records_sent and appointment.b_records_sent != form.instance.records_sent:
+            appointment.records_sent_date = timezone.now()
+        if form.instance.records_received and appointment.b_records_received != form.instance.records_received:
+            appointment.records_received_date = timezone.now()
         return super().form_valid(form)
-
-    # def form_valid(self, form_class):
-    #     form_class.save()
-    #     appt = self.object
-    #     if appt.records_sent == True:
-    #         appt.records_sent_date = datetime.now()
-    #     if appt.records_received == True:
-    #         appt.records_received_date = datetime.now()
-    #     appt.save()
-    #     return super().form_valid(form_class)
