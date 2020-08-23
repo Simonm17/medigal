@@ -7,8 +7,6 @@ from doctors.models import Doctor
 from users.models import User
 
 
-
-# Create your models here.
 class Appointment(models.Model):
     INITIAL = 'Initial'
     RE_EVAL = 'Re-evaluation'
@@ -54,9 +52,13 @@ class Appointment(models.Model):
     # Following fields will be hidden from initial create view and displayed on updateview once applicant has attended or missed appt.
     # For attended, keep default None or else default = "didn't attend"
     # LOGIC: If appointment date, show:
-    attended = models.BooleanField(default=False)
-    # if didn't attend, set logic:
+    attended = models.BooleanField(blank=True, null=True)
+
+    """ Set rescheduled = True if the current object has been rescheduled to new date """
+    rescheduled = models.BooleanField(default=False)
+    
     """
+    if didn't attend, set logic:
     create another instance of appt model, 
     input necessary previous data except 
     appt date/attneded will be blank on new object and 

@@ -24,20 +24,4 @@ class NewAppointmentForm(ModelForm):
         #         'type': 'datetime-local'
         #     }),
         # }
-
-class AppointmentViewForm(ModelForm):
-
-    class Meta:
-        model = Appointment
-        fields = ['records_sent', 'records_received', 'notes', 'attended']
-
         
-    # records_sent_date = forms.DateTimeField(
-    #     input_formats = ['%Y-%m-%d %H:%M'],
-    #     widget = forms.DateTimeInput(
-    #         attrs={
-    #             'type': 'datetime-local'
-    #         },
-    #         format='%Y-%m-%d %H:%M'
-    #     ),
-    # )

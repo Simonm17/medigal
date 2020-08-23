@@ -15,8 +15,6 @@ from doctors.models import Doctor
 from contacts.models import Address, Telephone, Email
 from users.models import User
 from .models import Appointment
-from .forms import NewAppointmentForm, AppointmentViewForm
-
 
 class NewAppointmentView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Appointment
@@ -62,11 +60,9 @@ class AppointmentListView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessag
 
 class AppointmentView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = Appointment
-    # form_class = AppointmentViewForm
     fields = ['records_sent', 'records_received', 'notes', 'attended']
     template_name = 'scheduling/appointment_view.html'
     success_message = 'Updated successfully!'
-
 
     def test_func(self):
         self.appointment = self.get_object()
