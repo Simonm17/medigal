@@ -15,6 +15,7 @@ from doctors.models import Doctor
 from contacts.models import Address, Telephone, Email
 from users.models import User
 from .models import Appointment
+from .forms import NewAppointmentForm
 
 class NewAppointmentView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Appointment
