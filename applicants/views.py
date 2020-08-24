@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -13,44 +13,20 @@ from .forms import ApplicantCreationForm
 from .models import Applicant
 
 
-@login_required
-def add_applicant(request):
-    if request.method == 'POST':
-        form = ApplicantCreationForm(request.POST)
-        a_form = AddressForm(request.POST)
-        t_form = TelephoneForm(request.POST)
-        e_form = EmailForm(request.POST)
-        if form.is_valid() and a_form.is_valid() and t_form.is_valid() and e_form.is_valid():
-            check_form = form.save(commit=False)
-            a_form.save()
-            t_form.save()
-            e_form.save()
-            check_form.created_by = request.user
-            check_form.updated_by = request.user
-            check_form.save()
-            last_a = Address.objects.last()
-            last_t = Telephone.objects.last()
-            last_e = Email.objects.last()
-            applicant = Applicant.objects.last()
-            applicant.address.add(last_a)
-            applicant.telephone.add(last_t)
-            applicant.email.add(last_e)
-            applicant.save()
-            messages.success(request, f'Your contact form has been saved!')
-            return redirect('applicant_list')
-    else:
-        form = ApplicantCreationForm()
-        a_form = AddressForm()
-        t_form = TelephoneForm()
-        e_form = EmailForm()
-    return render(request, 'applicants/create_applicant.html', context={
-        'form': form,
-        'a_form': a_form,
-        't_form': t_form,
-        'e_form': e_form,
-        'title': 'Add new Applicant',
-    })
+class ApplicantCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Applicant
+    template_name = 'applicants/create_applicant.html'
+    fields = ['prefix', 'first_name', 'last_name', 'suffix']
 
+    def form_valid(self, form):
+        """ Add the logged-in user to the object's 'created_by' field. """
+        applicant = self.object
+        applicant = form.save(commit=False)
+        applicant.created_by = self.request.user
+        applicant.save()
+        return super().form_valid(form)
+
+        
 class ApplicantListView(LoginRequiredMixin, ListView):
     model = Applicant
     template_name = 'applicant/applicant_list.html'

@@ -16,18 +16,9 @@
                 {% csrf_token %}
                 <fieldset class="">
                     <legend class="border-bottom mb-4">Add new Applicant</legend>
-                    <h6>Full Name</h6>
                     {{ form|crispy }}
-                    <hr />
-                    <h6>Address</h6>
-                    {{ a_form|crispy }}
-                    <hr />
-                    <h6>Telephone/Fax</h6>
-                    {{ t_form|crispy }}
-                    <hr />
-                    {{ e_form|crispy }}
                 </fieldset>
-                <button class="btn btn-outline-primary" type="submit">Create</button>
+                <button class="btn btn-outline-primary" type="submit">Submit</button>
             </form>
         </div>
     </div>
